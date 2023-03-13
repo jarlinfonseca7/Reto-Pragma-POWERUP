@@ -1,0 +1,12 @@
+server:
+  port: 8099
+
+eureka:
+  instance:
+    hostname: localhost
+
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      default-zone: http://localhost:8099/eureka/
