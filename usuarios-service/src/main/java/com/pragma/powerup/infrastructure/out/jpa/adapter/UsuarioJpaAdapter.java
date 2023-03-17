@@ -19,20 +19,25 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
     private  final IUsuarioEntityMapper usuarioEntityMapper;
 
     @Override
-    public Usuario guardarUsuario(Usuario usuario) {
+    public Usuario saveUser(Usuario usuario) {
         UsuarioEntity usuarioEntity = usuarioRepository.save(usuarioEntityMapper.toEntity(usuario));
         return usuarioEntityMapper.toUsuarioModel(usuarioEntity);
     }
 
     @Override
-    public Usuario obtenerUsuarioPorId(Long id) {
+    public Usuario getUserById(Long id) {
         Optional<UsuarioEntity> usuarioEntityOptional= usuarioRepository.findById(id);
         UsuarioEntity usuarioEntity =  usuarioEntityOptional.orElse(null) ;
         return usuarioEntityMapper.toUsuarioModel(usuarioEntity) ;
     }
 
     @Override
-    public List<Usuario> obtenerTodosUsuarios() {
+    public Boolean existsUserById(Long id) {
+        return  usuarioRepository.existsById(id);
+    }
+
+    @Override
+    public List<Usuario> getAllUsers() {
         List<UsuarioEntity> entityList = usuarioRepository.findAll();
         if(entityList.isEmpty()){
             throw new NoDataFoundException();
@@ -41,7 +46,7 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
     }
 
     @Override
-    public void eliminarUsuarioPorId(Long id) {
+    public void deleteUserById(Long id) {
 
           usuarioRepository.deleteById(id);
     }

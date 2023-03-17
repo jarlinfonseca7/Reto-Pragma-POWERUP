@@ -9,9 +9,8 @@ import lombok.Setter;
 public class UsuarioRequestDto {
     private String nombre;
     private String apellido;
-    private Long documentoDeIdentidad;
+    private String documentoDeIdentidad;
     private  String celular;
-
     private String correo;
     private String clave;
     private Long rol;

@@ -8,12 +8,14 @@ import java.util.List;
 
 public interface IUsuarioHandler {
 
-    void guardarUsuario(UsuarioRequestDto usuarioRequestDto);
+    void saveUser(UsuarioRequestDto usuarioRequestDto);
 
-     UsuarioRequestDto obtenerUsuarioPorId(Long id);
+     UsuarioRequestDto getUserById(Long id);
 
-    List<UsuarioResponseDto> obtenerTodosUsuarios();
+    Boolean existsUserById(Long id);
 
-     void eliminarUsuarioPorId(Long id);
+    List<UsuarioResponseDto> getAllUsers();
+
+     void deleteUserById(Long id);
 
 }

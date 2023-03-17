@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -29,10 +30,17 @@ public class RolEntity {
     @Column(name = "rol_id",nullable = false)
     private Long id;
     //@NotNull(message = "El nombre del rol no puede ser nulo")
+
+    @Column(name = "nombre")
+    @NotBlank
     private  String nombre;
    // @NotNull(message = "La descripcion no puede ser nula")
+    @Column(name = "descripcion")
+    @NotBlank
     private String descripcion;
 
     //@OneToMany(mappedBy = "rol")
     //private List<UsuarioEntity> usuarios;
+
+
 }

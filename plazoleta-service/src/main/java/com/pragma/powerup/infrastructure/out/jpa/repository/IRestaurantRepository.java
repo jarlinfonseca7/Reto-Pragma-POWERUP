@@ -1,0 +1,8 @@
+package com.pragma.powerup.infrastructure.out.jpa.repository;
+
+import com.pragma.powerup.infrastructure.out.jpa.entity.RestaurantEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface IRestaurantRepository extends PagingAndSortingRepository<RestaurantEntity, Long> {
+}

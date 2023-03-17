@@ -23,29 +23,33 @@ public class UsuarioHandler implements IUsuarioHandler {
     private final IUsuarioResponseMapper usuarioResponseMapper;
 
     @Override
-    public void guardarUsuario(UsuarioRequestDto usuarioRequestDto) {
+    public void saveUser(UsuarioRequestDto usuarioRequestDto) {
         Usuario usuario = usuarioRequestMapper.toUsuario(usuarioRequestDto);
-        usuarioServicePort.guardarUsuario(usuario);
+        usuarioServicePort.saveUser(usuario);
 
     }
 
 
     @Override
-    public UsuarioRequestDto obtenerUsuarioPorId(Long id) {
-        //UsuarioResponseDto usuario = usuarioResponseMapper.toResponse(usuarioServicePort.obtenerUsuarioPorId(id));
-        UsuarioRequestDto usuarioRequestDto = usuarioRequestMapper.toRequest(usuarioServicePort.obtenerUsuarioPorId(id));
+    public UsuarioRequestDto getUserById(Long id) {
+        UsuarioRequestDto usuarioRequestDto = usuarioRequestMapper.toRequest(usuarioServicePort.getUserById(id));
         return usuarioRequestDto;
     }
 
+    @Override
+    public Boolean existsUserById(Long id) {
+        return usuarioServicePort.existsUserById(id);
+    }
+
 
     @Override
-    public List<UsuarioResponseDto> obtenerTodosUsuarios() {
-        return usuarioResponseMapper.toResponseList(usuarioServicePort.obtenerTodosUsuarios());
+    public List<UsuarioResponseDto> getAllUsers() {
+        return usuarioResponseMapper.toResponseList(usuarioServicePort.getAllUsers());
     }
 
     @Override
-    public void eliminarUsuarioPorId(Long id) {
-        usuarioServicePort.eliminarUsuarioPorId(id);
+    public void deleteUserById(Long id) {
+        usuarioServicePort.deleteUserById(id);
     }
 
 

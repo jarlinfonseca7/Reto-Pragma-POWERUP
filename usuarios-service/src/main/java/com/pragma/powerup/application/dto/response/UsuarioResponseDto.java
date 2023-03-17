@@ -10,7 +10,7 @@ public class UsuarioResponseDto {
     private Long id;
     private String nombre;
     private String apellido;
-    private Long documentoDeIdentidad;
+    private String documentoDeIdentidad;
     private  String celular;
     private String correo;
     private String clave;

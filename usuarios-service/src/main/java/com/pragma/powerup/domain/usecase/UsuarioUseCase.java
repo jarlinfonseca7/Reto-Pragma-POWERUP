@@ -14,26 +14,32 @@ public class UsuarioUseCase implements IUsuarioServicePort {
     }
 
     @Override
-    public void guardarUsuario(Usuario usuario) {
-        usuarioPersistencePort.guardarUsuario(usuario);
+    public void saveUser(Usuario usuario) {
+        usuarioPersistencePort.saveUser(usuario);
     }
 
     @Override
-    public Usuario obtenerUsuarioPorId(Long id) {
+    public Usuario getUserById(Long id) {
 
-        return usuarioPersistencePort.obtenerUsuarioPorId(id);
+        return usuarioPersistencePort.getUserById(id);
+    }
+
+    @Override
+    public Boolean existsUserById(Long id) {
+        return usuarioPersistencePort.existsUserById(id);
     }
 
 
     @Override
-    public List<Usuario> obtenerTodosUsuarios() {
+    public List<Usuario> getAllUsers() {
 
-        return usuarioPersistencePort.obtenerTodosUsuarios();
+        return usuarioPersistencePort.getAllUsers();
     }
 
     @Override
-    public void eliminarUsuarioPorId(Long id) {
-        usuarioPersistencePort.eliminarUsuarioPorId(id);
+    public void deleteUserById(Long id) {
+
+        usuarioPersistencePort.deleteUserById(id);
     }
 
 

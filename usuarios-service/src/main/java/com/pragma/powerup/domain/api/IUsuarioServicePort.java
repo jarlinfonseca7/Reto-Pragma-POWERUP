@@ -6,11 +6,13 @@ import java.util.List;
 
 public interface IUsuarioServicePort {
 
-    void guardarUsuario(Usuario usuario);
+    void saveUser(Usuario usuario);
 
-    Usuario obtenerUsuarioPorId(Long id);
+    Usuario getUserById(Long id);
 
-    List<Usuario> obtenerTodosUsuarios();
+    Boolean existsUserById(Long id);
 
-    void eliminarUsuarioPorId(Long id);
+    List<Usuario> getAllUsers();
+
+    void deleteUserById(Long id);
 }
