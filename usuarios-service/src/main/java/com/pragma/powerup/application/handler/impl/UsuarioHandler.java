@@ -8,6 +8,8 @@ import com.pragma.powerup.application.mapper.IUsuarioResponseMapper;
 import com.pragma.powerup.domain.api.IUsuarioServicePort;
 import com.pragma.powerup.domain.model.Usuario;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,18 +24,21 @@ public class UsuarioHandler implements IUsuarioHandler {
     private final IUsuarioRequestMapper usuarioRequestMapper;
     private final IUsuarioResponseMapper usuarioResponseMapper;
 
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
+
     @Override
     public void saveUser(UsuarioRequestDto usuarioRequestDto) {
+       // usuarioRequestDto.setClave(passwordEncoder.encode(usuarioRequestDto.getClave()));
         Usuario usuario = usuarioRequestMapper.toUsuario(usuarioRequestDto);
         usuarioServicePort.saveUser(usuario);
 
     }
 
-
     @Override
-    public UsuarioRequestDto getUserById(Long id) {
-        UsuarioRequestDto usuarioRequestDto = usuarioRequestMapper.toRequest(usuarioServicePort.getUserById(id));
-        return usuarioRequestDto;
+    public UsuarioResponseDto getUserById(Long id) {
+        UsuarioResponseDto usuarioResponseDto = usuarioResponseMapper.toResponse(usuarioServicePort.getUserById(id));
+        return usuarioResponseDto;
     }
 
     @Override

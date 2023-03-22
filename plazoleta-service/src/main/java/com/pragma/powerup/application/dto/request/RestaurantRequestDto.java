@@ -18,5 +18,4 @@ public class RestaurantRequestDto {
     private String urlLogo;
     private Long id_propietario;
 
-    private List<DishModel> dishModelList;
 }

@@ -11,7 +11,7 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IRestaurantRequestMapper {
 
-    @Mapping(target = "dishModelList", source = "dishModelList")
+   // @Mapping(target = "dishModelList", source = "dishModelList")
     RestaurantModel toRestaurant(RestaurantRequestDto restaurantRequestDto);
 
 

@@ -47,12 +47,19 @@ dependencies {
 	implementation "org.springdoc:springdoc-openapi-webflux-ui:${openApiVersion}"
 
 	// Spring Security
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 	// Bcrypt
 	implementation 'org.mindrot:jbcrypt:0.4'
 
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.4'
+
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+	testImplementation 'org.mockito:mockito-core:5.1.1'
+	testImplementation 'org.mockito:mockito-junit-jupiter:5.1.1'
 }
 
 tasks.named('test') {

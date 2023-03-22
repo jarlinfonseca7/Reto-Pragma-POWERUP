@@ -34,31 +34,16 @@ public class UsuarioEntity {
     @Id
     @Column(name = "usuario_id", nullable = false)
     private Long id;
-    @NotBlank(message = "El nombre es requerido")
     @Column(name="nombre", length = 220)
     private String nombre;
-    @NotBlank(message = "El apellido es requerido")
     @Column(name="apellido", length = 220)
     private String apellido;
-
-    //@Min(value = 1, message = "El campo documento de identidad debe ser mayor que cero")
-    //@NumberFormat(style = NumberFormat.Style.NUMBER)
-    @Pattern(regexp = "\\d+", message = "El documento de identidad debe ser númerico")
-    @NotBlank(message = "El  documento de identidad es requerido")
     @Column(name="documento_de_identidad",  unique = true)
     private String documentoDeIdentidad;
-
-    @NotBlank(message = "El celular es requerido")
-    @Pattern(regexp = "^\\+?\\d{1,12}$", message = "El número de celular debe contener máximo 13 caracteres y puede contener el símbolo '+' al inicio")
     @Column(name="celular", length = 13)
     private String celular;
-
-    @NotBlank(message = "El correo electrónico es requerido")
-    @Email(message = "El correo electrónico debe ser válido")
     @Column(name="correo", unique = true)
     private String correo;
-
-    @NotBlank(message = "La clave es requerida")
     @Column(name="clave")
     private String clave;
 

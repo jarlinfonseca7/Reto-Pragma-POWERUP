@@ -38,7 +38,6 @@ public class CategoryEntity {
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,mappedBy = "categoryEntity")
-    @JsonIgnore
-    private List<DishEntity> dishEntities;
+/*    @OneToMany(fetch =FetchType.EAGER, cascade = CascadeType.ALL,mappedBy = "categoriaId")
+    private List<DishEntity> platos;*/
 }

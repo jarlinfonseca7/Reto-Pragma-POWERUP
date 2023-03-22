@@ -11,6 +11,8 @@ public interface IDishServicePort {
 
     DishModel getDishById(Long id);
 
+    void updateDish(Long id, DishModel dishModel);
+
     List<DishModel> getAllDishes();
 
     void deleteDishById(Long id);

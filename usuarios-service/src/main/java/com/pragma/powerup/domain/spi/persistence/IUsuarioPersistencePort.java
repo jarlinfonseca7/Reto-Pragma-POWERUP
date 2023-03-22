@@ -1,4 +1,4 @@
-package com.pragma.powerup.domain.spi;
+package com.pragma.powerup.domain.spi.persistence;
 
 import com.pragma.powerup.domain.model.Usuario;
 
@@ -15,4 +15,5 @@ public interface IUsuarioPersistencePort {
     List<Usuario> getAllUsers();
 
     void deleteUserById(Long id);
+
 }

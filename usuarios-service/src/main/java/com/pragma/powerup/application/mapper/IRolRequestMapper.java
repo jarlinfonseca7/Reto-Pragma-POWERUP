@@ -12,5 +12,4 @@ public interface IRolRequestMapper {
 
     Rol toRol(RolRequestDto rolRequestDto);
 
-    RolRequestDto toRequest(Rol rol);
 }

@@ -2,7 +2,7 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IObjectServicePort;
 import com.pragma.powerup.domain.model.ObjectModel;
-import com.pragma.powerup.domain.spi.IObjectPersistencePort;
+import com.pragma.powerup.domain.spi.persistence.IObjectPersistencePort;
 
 import java.util.List;
 

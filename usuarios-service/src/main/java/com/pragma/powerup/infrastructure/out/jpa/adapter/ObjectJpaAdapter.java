@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
 import com.pragma.powerup.domain.model.ObjectModel;
-import com.pragma.powerup.domain.spi.IObjectPersistencePort;
+import com.pragma.powerup.domain.spi.persistence.IObjectPersistencePort;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.ObjectEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IObjectEntityMapper;

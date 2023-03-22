@@ -15,5 +15,5 @@ public class CategoryModel {
     private Long id;
     private String nombre;
     private String descripcion;
-    private List<DishModel> dishModelList;
+    //private List<DishModel> platos;
 }

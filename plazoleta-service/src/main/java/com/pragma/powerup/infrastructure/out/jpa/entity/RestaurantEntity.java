@@ -9,6 +9,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -61,7 +62,6 @@ public class RestaurantEntity {
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     @Column(name = "id_propietario", nullable = false)
     private Long id_propietario;
-    @OneToMany(mappedBy = "restaurantEntity")
-    @JsonIgnore
-    private List<DishEntity> dishEntityList;
+  /*@OneToMany(fetch = FetchType.EAGER,mappedBy = "restauranteId")
+    private List<DishEntity> platos;*/
 }

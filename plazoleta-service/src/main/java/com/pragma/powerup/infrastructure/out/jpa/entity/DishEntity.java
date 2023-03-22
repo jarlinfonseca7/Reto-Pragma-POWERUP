@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "platos")
@@ -46,17 +49,17 @@ public class DishEntity {
     @Column(name = "url_imagen", nullable = false)
     private String urlImagen;
 
-    @NotBlank(message = "El activo es requerido (true(1) o false(0))")
-    @Column(name = "activo", nullable = false)
+    @NotNull(message = "El activo es requerido (true(1) o false(0))")
+    @Column(name = "activo")
     private Boolean activo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="restaurant_id")
-    private RestaurantEntity restaurantEntity;
+    private RestaurantEntity restauranteId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="category_id")
-    private CategoryEntity categoryEntity;
+    private CategoryEntity categoriaId;
 }

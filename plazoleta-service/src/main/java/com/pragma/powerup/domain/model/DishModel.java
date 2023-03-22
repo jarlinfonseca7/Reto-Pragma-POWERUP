@@ -17,8 +17,8 @@ public class DishModel {
     private String descripcion;
     private String urlImagen;
     private Boolean activo;
-    private RestaurantModel restaurantModel;
-    private CategoryModel categoryModel;
+    private RestaurantModel restauranteId;
+    private CategoryModel categoriaId;
 
 
 }

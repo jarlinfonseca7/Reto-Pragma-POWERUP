@@ -17,6 +17,7 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,9 +49,9 @@ public class UsuarioRestController {
     public ResponseEntity<Void> saveOwner(@Valid @RequestBody UsuarioRequestDto propietario) {
         // validar que el usuario autenticado sea un administrador
         // guardar el propietario en la base de datos y asignarle el rol de Propietario
-        propietario.setClave( BCrypt.hashpw(propietario.getClave(), BCrypt.gensalt()));
+
        //propietario.setClave(passwordEncoder.encode(propietario.getClave()));
-        propietario.setRol(2L);
+        propietario.setRol("2");
         usuarioHandler.saveUser(propietario);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -61,7 +62,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "Object already exists", content = @Content)
     })
     @PostMapping("/")
-    public ResponseEntity<Void> saveUser(@RequestBody UsuarioRequestDto usuarioRequestDto){
+    public ResponseEntity<Void> saveUser(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto){
         usuarioHandler.saveUser(usuarioRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -84,11 +85,11 @@ public class UsuarioRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Usuario encontrado",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UsuarioRequestDto.class))}),
+                            schema = @Schema(implementation = UsuarioResponseDto.class))}),
             @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
                     content = @Content)})
    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioRequestDto> getUserById(@PathVariable(value = "id") Long usuarioId) {
+    public ResponseEntity<UsuarioResponseDto> getUserById(@PathVariable(value = "id") Long usuarioId) {
         return  ResponseEntity.ok(usuarioHandler.getUserById(usuarioId));
     }
 

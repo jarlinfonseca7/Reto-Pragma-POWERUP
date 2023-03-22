@@ -16,6 +16,4 @@ public interface IUsuarioRequestMapper {
     Usuario toUsuario(UsuarioRequestDto usuarioRequestDto);
 
 
-    @Mapping(target = "rol", source = "rol.id")
-    UsuarioRequestDto toRequest(Usuario usuario);
 }

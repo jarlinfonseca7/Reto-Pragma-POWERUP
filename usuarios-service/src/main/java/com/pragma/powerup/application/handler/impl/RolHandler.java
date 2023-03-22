@@ -30,9 +30,9 @@ public class RolHandler  implements IRolHandler {
     }
 
     @Override
-    public RolRequestDto obtenerRolPorId(Long id) {
-        RolRequestDto rolRequestDto = rolRequestMapper.toRequest(rolServicePort.obtenerRolPorId(id));
-        return rolRequestDto;
+    public RolResponseDto obtenerRolPorId(Long id) {
+        RolResponseDto rolResponseDto = rolResponseMapper.toResponse(rolServicePort.obtenerRolPorId(id));
+        return rolResponseDto;
     }
 
     @Override

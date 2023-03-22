@@ -46,7 +46,7 @@ public class RolRestController {
     // Obtener un usuario por ID
 
     @GetMapping("/{id}")
-    public ResponseEntity<RolRequestDto> getRolById(@PathVariable(value = "id") Long rolId) {
+    public ResponseEntity<RolResponseDto> getRolById(@PathVariable(value = "id") Long rolId) {
         return  ResponseEntity.ok(rolHandler.obtenerRolPorId(rolId));
     }
 

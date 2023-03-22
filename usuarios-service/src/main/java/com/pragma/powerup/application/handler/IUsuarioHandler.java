@@ -10,7 +10,7 @@ public interface IUsuarioHandler {
 
     void saveUser(UsuarioRequestDto usuarioRequestDto);
 
-     UsuarioRequestDto getUserById(Long id);
+     UsuarioResponseDto getUserById(Long id);
 
     Boolean existsUserById(Long id);
 

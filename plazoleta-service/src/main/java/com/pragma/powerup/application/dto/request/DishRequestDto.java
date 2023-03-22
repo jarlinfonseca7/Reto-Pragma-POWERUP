@@ -12,6 +12,6 @@ public class DishRequestDto {
     private String descripcion;
     private String urlImagen;
     private Boolean activo;
-    private Long restaurantModel;
-    private Long categoryModel;
+    private Long restauranteId;
+    private Long categoriaId;
 }

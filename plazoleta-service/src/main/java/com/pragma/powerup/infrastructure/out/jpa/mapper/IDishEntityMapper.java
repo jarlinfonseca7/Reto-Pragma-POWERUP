@@ -14,12 +14,12 @@ import java.util.List;
 )
 public interface IDishEntityMapper {
 
-    @Mapping(target = "restaurantEntity.id", source = "restaurantModel.id")
-    @Mapping(target = "categoryEntity.id", source = "categoryModel.id")
+    @Mapping(target = "restauranteId.id", source = "restauranteId.id")
+    @Mapping(target = "categoriaId.id", source = "categoriaId.id")
     DishEntity toEntity(DishModel dishModel);
 
-    @Mapping(target = "restaurantModel.id", source = "restaurantEntity.id")
-    @Mapping(target = "categoryModel.id", source = "categoryEntity.id")
+     @Mapping(target = "restauranteId.id", source = "restauranteId.id")
+     @Mapping(target = "categoriaId.id", source = "categoriaId.id")
     DishModel toDishModel(DishEntity dishEntity);
 
     List<DishModel> toDishModelList(List<DishEntity> dishEntityList);

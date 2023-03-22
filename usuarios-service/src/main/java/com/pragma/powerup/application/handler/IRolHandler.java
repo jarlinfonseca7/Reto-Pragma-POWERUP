@@ -9,7 +9,7 @@ public interface IRolHandler {
 
     void guardarRol(RolRequestDto rolRequestDto);
 
-    RolRequestDto obtenerRolPorId(Long id);
+    RolResponseDto obtenerRolPorId(Long id);
 
     List<RolResponseDto> obtenerTodosRoles();
 

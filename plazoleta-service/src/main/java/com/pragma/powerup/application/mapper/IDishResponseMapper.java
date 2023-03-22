@@ -13,8 +13,8 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IDishResponseMapper {
 
-    @Mapping(target = "restaurantModel", source = "restaurantModel.id")
-    @Mapping(target = "categoryModel", source = "categoryModel.id")
+    //@Mapping(target = "restauranteId", source = "restauranteId.id")
+    //@Mapping(target = "categoriaId", source = "categoriaId.id")
     DishResponseDto toResponse(DishModel dishModel);
 
     List<DishResponseDto> toResponseList(List<DishModel> dishModelList);

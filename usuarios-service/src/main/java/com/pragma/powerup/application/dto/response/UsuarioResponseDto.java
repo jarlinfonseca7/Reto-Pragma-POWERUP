@@ -15,7 +15,5 @@ public class UsuarioResponseDto {
     private String correo;
     private String clave;
 
-
-    //Borrar si es necesario
     private Rol rol;
 }

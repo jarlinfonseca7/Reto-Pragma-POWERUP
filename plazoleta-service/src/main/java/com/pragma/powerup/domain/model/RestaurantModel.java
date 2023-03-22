@@ -19,6 +19,6 @@ public class RestaurantModel {
     private String telefono;
     private String urlLogo;
     private Long id_propietario;
-    private List<DishModel> dishModelList;
+    //private List<DishModel> platos;
 
 }

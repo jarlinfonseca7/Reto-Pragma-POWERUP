@@ -2,7 +2,7 @@ package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
 
 import com.pragma.powerup.domain.model.Usuario;
-import com.pragma.powerup.domain.spi.IUsuarioPersistencePort;
+import com.pragma.powerup.domain.spi.persistence.IUsuarioPersistencePort;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.UsuarioEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IUsuarioEntityMapper;
@@ -17,6 +17,9 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
 
     private final IUsuarioRepository usuarioRepository;
     private  final IUsuarioEntityMapper usuarioEntityMapper;
+
+    //private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public Usuario saveUser(Usuario usuario) {
@@ -50,4 +53,6 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
 
           usuarioRepository.deleteById(id);
     }
+
+
 }

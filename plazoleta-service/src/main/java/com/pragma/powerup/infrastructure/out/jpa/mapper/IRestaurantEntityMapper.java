@@ -13,10 +13,12 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
 public interface IRestaurantEntityMapper {
-    @Mapping(target = "dishEntityList", source = "dishModelList")
+    //@Mapping(target = "platos", source = "platos")
     RestaurantEntity toEntity(RestaurantModel restaurantModel);
-    @Mapping(target = "dishModelList", source = "dishEntityList")
+   // @Mapping(target = "platos", source = "platos")
     RestaurantModel toRestaurantModel(RestaurantEntity restaurantEntity);
+
+    //@Mapping(target = "dishModelList", source = "dishEntityList")
     List<RestaurantModel> toRestaurantModelList(List<RestaurantEntity> restaurantModelList);
 
 }
