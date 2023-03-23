@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +44,7 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "409", description = "Restaurant already exists", content = @Content)
     })
     @PostMapping("/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveRestaurant(@Valid @RequestBody RestaurantRequestDto restaurant) {
         boolean existUser = userFeignClient.existsUserById(restaurant.getId_propietario());
         System.out.println(existUser);
@@ -50,7 +52,7 @@ public class RestaurantRestController {
         if (!existUser) throw new UserNotExistException();
         UserDto user = userFeignClient.getUserById(restaurant.getId_propietario());
         System.out.println(user.getRol());
-        if (user.getRol() != 2) throw new UserMustBeOwnerException();
+        if (user.getRol().getId() != 2) throw new UserMustBeOwnerException();
 
 
         System.out.println("Es un propietario");
@@ -66,6 +68,7 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
+    @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
     }

@@ -10,6 +10,8 @@ public interface IUsuarioServicePort {
 
     Usuario getUserById(Long id);
 
+    Usuario getUserByCorreo(String correo);
+
     Boolean existsUserById(Long id);
 
     List<Usuario> getAllUsers();

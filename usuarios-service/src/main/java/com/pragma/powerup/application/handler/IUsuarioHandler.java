@@ -11,6 +11,7 @@ public interface IUsuarioHandler {
     void saveUser(UsuarioRequestDto usuarioRequestDto);
 
      UsuarioResponseDto getUserById(Long id);
+     UsuarioResponseDto getUserByCorreo(String correo);
 
     Boolean existsUserById(Long id);
 

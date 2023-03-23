@@ -1,6 +1,6 @@
 package com.pragma.powerup.infrastructure.security;
 
-import com.pragma.powerup.domain.model.Usuario;
+import com.pragma.powerup.infrastructure.feignclients.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,21 +13,20 @@ import java.util.List;
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private final Usuario usuario;
-
+    private final UserDto userDto;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(usuario.getRol().getNombre()));
+        return List.of(new SimpleGrantedAuthority(userDto.getRol().getNombre()));
     }
 
     @Override
     public String getPassword() {
-        return usuario.getClave();
+        return userDto.getClave();
     }
 
     @Override
     public String getUsername() {
-        return usuario.getCorreo();
+        return userDto.getCorreo();
     }
 
     @Override
@@ -51,10 +50,10 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getNombre(){
-        return usuario.getNombre();
+        return userDto.getNombre();
     }
 
     public Long getId(){
-        return usuario.getId();
+        return userDto.getId();
     }
 }

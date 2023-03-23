@@ -14,6 +14,7 @@ public class UserDto {
     private String celular;
     private String correo;
     private String clave;
-    private Long rol;
+    private RolDto rol;
+    //private Long rol;
 
 }

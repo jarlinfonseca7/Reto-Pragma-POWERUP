@@ -24,12 +24,9 @@ public class UsuarioHandler implements IUsuarioHandler {
     private final IUsuarioRequestMapper usuarioRequestMapper;
     private final IUsuarioResponseMapper usuarioResponseMapper;
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
 
     @Override
     public void saveUser(UsuarioRequestDto usuarioRequestDto) {
-       // usuarioRequestDto.setClave(passwordEncoder.encode(usuarioRequestDto.getClave()));
         Usuario usuario = usuarioRequestMapper.toUsuario(usuarioRequestDto);
         usuarioServicePort.saveUser(usuario);
 
@@ -42,7 +39,14 @@ public class UsuarioHandler implements IUsuarioHandler {
     }
 
     @Override
+    public UsuarioResponseDto getUserByCorreo(String correo) {
+        UsuarioResponseDto usuarioResponseDto = usuarioResponseMapper.toResponse(usuarioServicePort.getUserByCorreo(correo));
+        return usuarioResponseDto;
+    }
+
+    @Override
     public Boolean existsUserById(Long id) {
+
         return usuarioServicePort.existsUserById(id);
     }
 

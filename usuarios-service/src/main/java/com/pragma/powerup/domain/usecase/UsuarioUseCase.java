@@ -36,6 +36,11 @@ public class UsuarioUseCase implements IUsuarioServicePort {
     }
 
     @Override
+    public Usuario getUserByCorreo(String correo) {
+        return usuarioPersistencePort.getUserByCorreo(correo);
+    }
+
+    @Override
     public Boolean existsUserById(Long id) {
         return usuarioPersistencePort.existsUserById(id);
     }

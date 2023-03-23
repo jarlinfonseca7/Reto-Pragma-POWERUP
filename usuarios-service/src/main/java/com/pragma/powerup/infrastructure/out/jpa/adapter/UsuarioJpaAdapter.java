@@ -18,7 +18,6 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
     private final IUsuarioRepository usuarioRepository;
     private  final IUsuarioEntityMapper usuarioEntityMapper;
 
-    //private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -32,6 +31,13 @@ public class UsuarioJpaAdapter implements IUsuarioPersistencePort {
         Optional<UsuarioEntity> usuarioEntityOptional= usuarioRepository.findById(id);
         UsuarioEntity usuarioEntity =  usuarioEntityOptional.orElse(null) ;
         return usuarioEntityMapper.toUsuarioModel(usuarioEntity) ;
+    }
+
+    @Override
+    public Usuario getUserByCorreo(String correo) {
+        Optional<UsuarioEntity> usuarioEntityOptional = usuarioRepository.findByCorreo(correo);
+        UsuarioEntity usuarioEntity = usuarioEntityOptional.orElse(null);
+        return usuarioEntityMapper.toUsuarioModel(usuarioEntity);
     }
 
     @Override

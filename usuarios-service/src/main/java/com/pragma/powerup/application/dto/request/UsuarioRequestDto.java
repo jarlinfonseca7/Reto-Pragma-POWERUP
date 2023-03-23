@@ -36,8 +36,8 @@ public class UsuarioRequestDto {
     //@Min(value = 1, message = "El campo rol debe ser mayor que cero")
 
    // @NotBlank(message = "El rol es requerido")
-    @JsonIgnore
-    private String rol;
+   // @JsonIgnore
+    private Long rol;
 
 
 }

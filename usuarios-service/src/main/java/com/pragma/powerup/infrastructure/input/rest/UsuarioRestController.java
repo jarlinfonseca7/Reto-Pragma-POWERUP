@@ -17,6 +17,7 @@ import org.springframework.boot.context.config.ConfigDataResourceNotFoundExcepti
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,9 +37,6 @@ public class UsuarioRestController {
 
     private final IUsuarioHandler usuarioHandler;
 
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
-
 
     @Operation(summary = "Add a new owner")
     @ApiResponses(value = {
@@ -46,12 +44,11 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "Owner already exists", content = @Content)
     })
     @PostMapping("/owner")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveOwner(@Valid @RequestBody UsuarioRequestDto propietario) {
         // validar que el usuario autenticado sea un administrador
         // guardar el propietario en la base de datos y asignarle el rol de Propietario
-
-       //propietario.setClave(passwordEncoder.encode(propietario.getClave()));
-        propietario.setRol("2");
+        propietario.setRol(2L);
         usuarioHandler.saveUser(propietario);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -62,6 +59,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "Object already exists", content = @Content)
     })
     @PostMapping("/")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto){
         usuarioHandler.saveUser(usuarioRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -75,6 +73,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
+   // @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<List<UsuarioResponseDto>> getAllUsers(){
         return ResponseEntity.ok(usuarioHandler.getAllUsers());
     }
@@ -93,6 +92,17 @@ public class UsuarioRestController {
         return  ResponseEntity.ok(usuarioHandler.getUserById(usuarioId));
     }
 
+    @Operation(summary = "Get user by correo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Usuario encontrado",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UsuarioResponseDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
+                    content = @Content)})
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UsuarioResponseDto> getUserByCorreo(@PathVariable(value = "email") String correo){
+        return  ResponseEntity.ok((usuarioHandler.getUserByCorreo(correo)));
+    }
 
     @GetMapping("existsUserById/{id}")
     public ResponseEntity<Boolean> existsUserById(@PathVariable(value = "id") Long usuarioId){

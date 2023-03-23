@@ -12,4 +12,7 @@ public interface UserFeignClient {
 
     @GetMapping("/{id}")
     UserDto getUserById(@PathVariable(value = "id") Long usuarioId);
+
+    @GetMapping("/email/{email}")
+    UserDto getUserByCorreo(@PathVariable(value = "email") String correo);
 }
