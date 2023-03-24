@@ -52,6 +52,21 @@ public class TokenUtils {
         }
     }
 
+    public static Long getUsuarioAutenticadoId(String token){
+        try {
+            Claims claims  = Jwts.parserBuilder()
+                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.get("id", Long.class);
+
+        }catch (JwtException e){
+            return  null;
+        }
+    }
+
     public static UsernamePasswordAuthenticationToken getAuthentication(String token) {
         try {
             Claims claims = Jwts.parserBuilder()

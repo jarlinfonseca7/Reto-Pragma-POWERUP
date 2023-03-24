@@ -4,6 +4,10 @@ import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
 import com.pragma.powerup.application.handler.impl.DishHandler;
+import com.pragma.powerup.application.handler.impl.RestaurantHandler;
+import com.pragma.powerup.infrastructure.exception.OwnerAuthMustBeOwnerRestuarant;
+import com.pragma.powerup.infrastructure.feignconfiguration.SecurityFeignRequestInterceptor;
+import com.pragma.powerup.infrastructure.security.TokenUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -31,7 +37,7 @@ import java.util.List;
 public class DishRestController {
 
     private final DishHandler dishHandler;
-
+    private  final RestaurantHandler restaurantHandler;
     @Operation(summary = "Add a new dish")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Dish created", content = @Content),
@@ -40,6 +46,24 @@ public class DishRestController {
     @PostMapping("/")
     public ResponseEntity<Void> saveDish(@Valid @RequestBody DishRequestDto dish) {
         dish.setActivo(true);
+        String bearerToken = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
+        System.out.println("Token: "+bearerToken);
+        String correo = TokenUtils.getCorreo(bearerToken.replace("Bearer ",""));
+
+        Long idOwnerAuth = TokenUtils.getUsuarioAutenticadoId(bearerToken.replace("Bearer ",""));
+
+        Long idOwnerRestaurant =  restaurantHandler.getRestaurantById(dish.getRestauranteId()).getId_propietario();
+
+
+
+        System.out.println("ID del propietario autenticado: "+idOwnerAuth);
+        System.out.println("CORREO del propietario: "+correo);
+        System.out.println("ID del restaurante del plato: "+dish.getRestauranteId());
+        System.out.println("ID del propietario del restaurante: "+ idOwnerRestaurant);
+        if(idOwnerAuth!=idOwnerRestaurant) throw new OwnerAuthMustBeOwnerRestuarant();
+
+
+
         dishHandler.saveDish(dish);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

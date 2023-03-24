@@ -32,6 +32,11 @@ public class ControllerAdvisor {
                 messageError = "Message Error";
                 messageException = "User Not Exist";
                 //messageException = exception.getClass().toString();
+
+            case "class com.pragma.powerup.infrastructure.exception.OwnerAuthMustBeOwnerRestuarant":
+                messageError = "Message Error";
+                messageException = "Authenticated owner must own the restaurant";
+                //messageException = exception.getClass().toString();
                 break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

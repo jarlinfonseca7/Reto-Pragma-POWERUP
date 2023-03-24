@@ -24,6 +24,8 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
     @Override
     public void saveUser(Usuario usuario) {
+        // Obtener el rol y dependiendo del rol que le haya asignado,
+
        //  usuario.setClave(BCrypt.hashpw(usuario.getClave(), BCrypt.gensalt()));
         usuario.setClave(usuarioPasswordEncoderPort.encode(usuario.getClave()));
        // validateAllPropertiesUser(usuario);
