@@ -3,7 +3,7 @@ package com.pragma.powerup.domain.usecase;
 import com.pragma.powerup.domain.model.CategoryModel;
 import com.pragma.powerup.domain.model.DishModel;
 import com.pragma.powerup.domain.model.RestaurantModel;
-import com.pragma.powerup.domain.spi.IDishPersistencePort;
+import com.pragma.powerup.domain.spi.persistence.IDishPersistencePort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -61,7 +61,7 @@ class DishUseCaseTest {
 
     @Test
     void mustUpdateADish() {
-        RestaurantModel restaurantModel= new RestaurantModel();
+       RestaurantModel restaurantModel= new RestaurantModel();
         restaurantModel.setId(1L);
         restaurantModel.setNombre("Frisby");
         restaurantModel.setNit("1654144544");

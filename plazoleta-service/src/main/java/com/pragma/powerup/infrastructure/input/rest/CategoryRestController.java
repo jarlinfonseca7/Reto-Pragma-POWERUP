@@ -2,6 +2,7 @@ package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.CategoryRequestDto;
 import com.pragma.powerup.application.dto.response.CategoryResponseDto;
+import com.pragma.powerup.application.handler.ICategoryHandler;
 import com.pragma.powerup.application.handler.impl.CategoryHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -28,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryRestController {
 
-    private final CategoryHandler categoryHandler;
+    private final ICategoryHandler categoryHandler;
 
     @Operation(summary = "Add a new category")
     @ApiResponses(value = {

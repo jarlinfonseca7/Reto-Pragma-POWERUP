@@ -2,11 +2,8 @@ package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
-import com.pragma.powerup.application.handler.impl.RestaurantHandler;
-import com.pragma.powerup.infrastructure.exception.UserMustBeOwnerException;
-import com.pragma.powerup.infrastructure.exception.UserNotExistException;
-import com.pragma.powerup.infrastructure.feignclients.UserDto;
-import com.pragma.powerup.infrastructure.feignclients.UserFeignClient;
+import com.pragma.powerup.application.handler.IRestaurantHandler;
+//import com.pragma.powerup.infrastructure.feignclients.UserFeignClient;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -34,9 +30,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestaurantRestController {
 
-    @Autowired
-    private UserFeignClient userFeignClient;
-    private final RestaurantHandler restaurantHandler;
+   // @Autowired
+    //private UserFeignClient userFeignClient;
+    private final IRestaurantHandler restaurantHandler;
 
     @Operation(summary = "Add a new restaurant")
     @ApiResponses(value = {
@@ -46,16 +42,6 @@ public class RestaurantRestController {
     @PostMapping("/")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveRestaurant(@Valid @RequestBody RestaurantRequestDto restaurant) {
-        boolean existUser = userFeignClient.existsUserById(restaurant.getId_propietario());
-        System.out.println(existUser);
-
-        if (!existUser) throw new UserNotExistException();
-        UserDto user = userFeignClient.getUserById(restaurant.getId_propietario());
-        System.out.println(user.getRol());
-        if (user.getRol().getId() != 2) throw new UserMustBeOwnerException();
-
-
-        System.out.println("Es un propietario");
         restaurantHandler.saveRestaurant(restaurant);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -68,7 +54,7 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
-    @PreAuthorize("hasAuthority('PROPIETARIO')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
     }

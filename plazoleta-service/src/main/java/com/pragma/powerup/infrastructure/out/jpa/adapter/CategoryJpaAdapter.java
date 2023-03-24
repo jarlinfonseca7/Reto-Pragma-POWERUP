@@ -1,7 +1,7 @@
 package com.pragma.powerup.infrastructure.out.jpa.adapter;
 
 import com.pragma.powerup.domain.model.CategoryModel;
-import com.pragma.powerup.domain.spi.ICategoryPersistencePort;
+import com.pragma.powerup.domain.spi.persistence.ICategoryPersistencePort;
 import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 import com.pragma.powerup.infrastructure.out.jpa.entity.CategoryEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.ICategoryEntityMapper;

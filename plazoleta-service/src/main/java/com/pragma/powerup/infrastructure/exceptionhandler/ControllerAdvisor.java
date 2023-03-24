@@ -32,6 +32,7 @@ public class ControllerAdvisor {
                 messageError = "Message Error";
                 messageException = "User Not Exist";
                 //messageException = exception.getClass().toString();
+                break;
 
             case "class com.pragma.powerup.infrastructure.exception.OwnerAuthMustBeOwnerRestuarant":
                 messageError = "Message Error";

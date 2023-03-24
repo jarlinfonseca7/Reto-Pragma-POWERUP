@@ -1,13 +1,13 @@
 package com.pragma.powerup.infrastructure.security;
 
-import com.pragma.powerup.infrastructure.feignclients.UserDto;
+import com.pragma.powerup.domain.model.UserModel;
+import com.pragma.powerup.infrastructure.out.feignclients.dto.UserDto;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @AllArgsConstructor

@@ -20,7 +20,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.List;
 
 @Entity
 @Table(name = "restaurantes")
@@ -39,7 +38,6 @@ public class RestaurantEntity {
     @Pattern(regexp = "^(?=.*[a-zA-Z])[0-9a-zA-Z ]+$", message = "El nombre puede contener números con letras pero no solo números")
     @Column(name = "nombre", nullable = false)
     private String nombre;
-
 
     @NotBlank(message = "El nit es requerido")
     @Pattern(regexp = "\\d+", message = "El nit debe ser númerico")

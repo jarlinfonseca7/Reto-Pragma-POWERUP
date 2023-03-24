@@ -1,4 +1,4 @@
-package com.pragma.powerup.domain.spi;
+package com.pragma.powerup.domain.spi.persistence;
 
 import com.pragma.powerup.domain.model.RestaurantModel;
 

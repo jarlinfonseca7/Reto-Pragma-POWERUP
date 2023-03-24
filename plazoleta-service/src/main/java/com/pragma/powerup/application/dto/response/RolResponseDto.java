@@ -1,11 +1,11 @@
-package com.pragma.powerup.infrastructure.feignclients;
+package com.pragma.powerup.application.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RolDto {
+public class RolResponseDto {
     private Long id;
     private String nombre;
     private String descripcion;

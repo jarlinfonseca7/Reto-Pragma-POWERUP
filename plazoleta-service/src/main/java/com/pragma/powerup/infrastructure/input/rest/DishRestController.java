@@ -3,6 +3,7 @@ package com.pragma.powerup.infrastructure.input.rest;
 import com.pragma.powerup.application.dto.request.DishRequestDto;
 import com.pragma.powerup.application.dto.request.DishUpdateRequestDto;
 import com.pragma.powerup.application.dto.response.DishResponseDto;
+import com.pragma.powerup.application.handler.IDishHandler;
 import com.pragma.powerup.application.handler.impl.DishHandler;
 import com.pragma.powerup.application.handler.impl.RestaurantHandler;
 import com.pragma.powerup.infrastructure.exception.OwnerAuthMustBeOwnerRestuarant;
@@ -36,8 +37,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DishRestController {
 
-    private final DishHandler dishHandler;
-    private  final RestaurantHandler restaurantHandler;
+    private final IDishHandler dishHandler;
+    ///private  final RestaurantHandler restaurantHandler;
     @Operation(summary = "Add a new dish")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Dish created", content = @Content),
@@ -45,7 +46,7 @@ public class DishRestController {
     })
     @PostMapping("/")
     public ResponseEntity<Void> saveDish(@Valid @RequestBody DishRequestDto dish) {
-        dish.setActivo(true);
+       /* dish.setActivo(true);
         String bearerToken = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader("Authorization");
         System.out.println("Token: "+bearerToken);
         String correo = TokenUtils.getCorreo(bearerToken.replace("Bearer ",""));
@@ -62,7 +63,7 @@ public class DishRestController {
         System.out.println("ID del propietario del restaurante: "+ idOwnerRestaurant);
         if(idOwnerAuth!=idOwnerRestaurant) throw new OwnerAuthMustBeOwnerRestuarant();
 
-
+*/
 
         dishHandler.saveDish(dish);
         return new ResponseEntity<>(HttpStatus.CREATED);
