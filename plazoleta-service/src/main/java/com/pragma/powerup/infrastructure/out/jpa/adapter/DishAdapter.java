@@ -7,6 +7,7 @@ import com.pragma.powerup.infrastructure.out.jpa.entity.DishEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IDishEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IDishRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class DishAdapter implements IDishPersistencePort {
 
     @Override
     public List<DishModel> getAllDishes() {
-        List<DishEntity> dishEntityList =  dishRepository.findAll();
+        List<DishEntity> dishEntityList =  dishRepository.findAll(Sort.by(Sort.Direction.ASC,"nombre"));
         if(dishEntityList.isEmpty()){
             throw new NoDataFoundException();
         }

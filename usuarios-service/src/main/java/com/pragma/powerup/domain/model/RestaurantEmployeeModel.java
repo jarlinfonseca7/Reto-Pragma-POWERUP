@@ -16,6 +16,4 @@ public class RestaurantEmployeeModel {
     private String restaurantId;
 
     private String personId;
-
-
 }

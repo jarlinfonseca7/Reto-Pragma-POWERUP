@@ -11,6 +11,8 @@ public interface IUsuarioRepository extends JpaRepository<UsuarioEntity, Long> {
 
     Optional<UsuarioEntity> findByCorreo(String correo);
 
+    //Optional<UsuarioEntity> findById(Long  correo);
+
 
 
     //  Optional<UsuarioEntity> findById(Long id);

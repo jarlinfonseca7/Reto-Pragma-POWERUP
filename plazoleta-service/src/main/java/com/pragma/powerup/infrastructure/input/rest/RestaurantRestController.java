@@ -71,6 +71,19 @@ public class RestaurantRestController {
         return ResponseEntity.ok(restaurantHandler.getRestaurantById(restaurantId));
     }
 
+    @Operation(summary = "Get restaurant by Id_propietario")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Restaurant returned",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = RestaurantResponseDto.class))}),
+            @ApiResponse(responseCode = "404", description = "Restaurant no found",
+                    content = @Content)})
+    @GetMapping("/restaurantByIdPropietario/{id}")
+    public ResponseEntity<RestaurantResponseDto> getRestaurantByIdPropietario(@PathVariable(value = "id") Long idPropietario) {
+        return ResponseEntity.ok(restaurantHandler.getRestaurantByIdPropietario(idPropietario));
+    }
+
+
 
     @Operation(summary = "Detele a restaurant")
     @ApiResponses(value = {

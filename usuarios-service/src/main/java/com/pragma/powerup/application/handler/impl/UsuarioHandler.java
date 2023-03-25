@@ -33,6 +33,15 @@ public class UsuarioHandler implements IUsuarioHandler {
     }
 
     @Override
+    public void saveRestaurantEmployee(UsuarioRequestDto usuarioRequestDto) {
+        Usuario usuario = usuarioRequestMapper.toUsuario(usuarioRequestDto);
+        usuarioServicePort.saveRestaurantEmployee(usuario);
+    }
+
+
+
+
+    @Override
     public UsuarioResponseDto getUserById(Long id) {
         UsuarioResponseDto usuarioResponseDto = usuarioResponseMapper.toResponse(usuarioServicePort.getUserById(id));
         return usuarioResponseDto;

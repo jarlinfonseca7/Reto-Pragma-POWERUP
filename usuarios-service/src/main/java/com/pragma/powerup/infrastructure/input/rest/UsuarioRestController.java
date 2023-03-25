@@ -60,12 +60,12 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "Employee already exists", content = @Content)
     })
     @PostMapping("/employee")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UsuarioRequestDto empleado) {
-        // validar que el usuario autenticado sea un administrador
-        // guardar el propietario en la base de datos y asignarle el rol de Propietario
-        empleado.setRol(3L);
+       // empleado.setRol(3L);
         usuarioHandler.saveUser(empleado);
+        usuarioHandler.saveRestaurantEmployee(empleado);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

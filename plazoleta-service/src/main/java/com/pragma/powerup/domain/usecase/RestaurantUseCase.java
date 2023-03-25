@@ -24,11 +24,11 @@ public class RestaurantUseCase implements IRestaurantServicePort {
 
     @Override
     public void saveRestaurant(RestaurantModel restaurantModel) {
-        boolean existUser = userFeignClient.existsUserById(restaurantModel.getId_propietario());
+        boolean existUser = userFeignClient.existsUserById(restaurantModel.getIdPropietario());
         System.out.println(existUser);
 
         if (!existUser) throw new UserNotExistException();
-        UserModel user = userFeignClient.getUserById(restaurantModel.getId_propietario());
+        UserModel user = userFeignClient.getUserById(restaurantModel.getIdPropietario());
         System.out.println(user.getRol());
         if (user.getRol().getId() != 2) throw new UserMustBeOwnerException();
 
@@ -40,6 +40,11 @@ public class RestaurantUseCase implements IRestaurantServicePort {
     @Override
     public RestaurantModel getRestaurantById(Long id) {
         return restaurantPersistencePort.getRestaurantById(id);
+    }
+
+    @Override
+    public RestaurantModel getRestaurantByIdPropietario(Long id_propietario) {
+        return restaurantPersistencePort.getRestaurantByIdPropietario(id_propietario);
     }
 
     @Override

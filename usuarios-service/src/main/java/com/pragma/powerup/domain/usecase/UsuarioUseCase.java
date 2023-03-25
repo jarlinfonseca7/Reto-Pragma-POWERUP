@@ -2,9 +2,16 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IUsuarioServicePort;
 import com.pragma.powerup.domain.exception.DomainException;
+import com.pragma.powerup.domain.model.RestaurantEmployeeModel;
+import com.pragma.powerup.domain.model.RestaurantModel;
+import com.pragma.powerup.domain.model.Rol;
 import com.pragma.powerup.domain.model.Usuario;
+import com.pragma.powerup.domain.spi.feignclients.IRestaurantEmployeeFeignClientPort;
+import com.pragma.powerup.domain.spi.feignclients.IRestaurantFeingClientPort;
 import com.pragma.powerup.domain.spi.passwordencoder.IUsuarioPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.persistence.IUsuarioPersistencePort;
+import com.pragma.powerup.domain.spi.token.IToken;
+
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,20 +23,77 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
     private  final IUsuarioPasswordEncoderPort usuarioPasswordEncoderPort;
 
+    private  final IRestaurantEmployeeFeignClientPort restaurantEmployeeFeignClientPort;
 
-    public UsuarioUseCase(IUsuarioPersistencePort usuarioPersistencePort, IUsuarioPasswordEncoderPort usuarioPasswordEncoderPort) {
+    private final IToken token;
+
+    private final IRestaurantFeingClientPort restaurantFeingClientPort;
+
+    public UsuarioUseCase(IUsuarioPersistencePort usuarioPersistencePort, IUsuarioPasswordEncoderPort usuarioPasswordEncoderPort, IRestaurantEmployeeFeignClientPort restaurantEmployeeFeignClientPort, IToken token, IRestaurantFeingClientPort restaurantFeingClientPort) {
         this.usuarioPersistencePort = usuarioPersistencePort;
         this.usuarioPasswordEncoderPort = usuarioPasswordEncoderPort;
+        this.restaurantEmployeeFeignClientPort = restaurantEmployeeFeignClientPort;
+        this.token = token;
+        this.restaurantFeingClientPort = restaurantFeingClientPort;
     }
 
     @Override
     public void saveUser(Usuario usuario) {
+       // RestaurantEmployeeModel restaurantEmployeeModel = new RestaurantEmployeeModel();
+        String bearerToken = token.getBearerToken();
+
+        Rol rol = new Rol();
+        String rolS =token.getUsuarioAutenticadoRol(bearerToken);
+        System.out.println(rolS);
+
+        if(rolS.equals("PROPIETARIO")){
+            rol.setId(3L);
+            usuario.setRol(rol);
+
+            usuario.setClave(usuarioPasswordEncoderPort.encode(usuario.getClave()));
+            // validateAllPropertiesUser(usuario);
+            usuarioPersistencePort.saveUser(usuario);
+
+
+
+        }
+
+
         // Obtener el rol y dependiendo del rol que le haya asignado,
 
-       //  usuario.setClave(BCrypt.hashpw(usuario.getClave(), BCrypt.gensalt()));
-        usuario.setClave(usuarioPasswordEncoderPort.encode(usuario.getClave()));
-       // validateAllPropertiesUser(usuario);
-        usuarioPersistencePort.saveUser(usuario);
+        //usuario.setRol();
+
+
+    }
+
+    @Override
+    public void saveRestaurantEmployee(Usuario usuario) {
+        RestaurantEmployeeModel restaurantEmployeeModel = new RestaurantEmployeeModel();
+        String bearerToken = token.getBearerToken();
+        Long idOwnerAuth = token.getUsuarioAutenticadoId(bearerToken);
+
+        RestaurantModel restaurantModel = restaurantFeingClientPort.getRestaurantByIdPropietario(idOwnerAuth);
+        String restaurantId = String.valueOf(restaurantModel.getId());
+        System.out.println(restaurantId);
+        String employee_id = String.valueOf(usuarioPersistencePort.getUserByCorreo(usuario.getCorreo()).getId());
+        System.out.println(employee_id);
+
+        restaurantEmployeeModel.setRestaurantId(restaurantId);
+        restaurantEmployeeModel.setPersonId(employee_id);
+        restaurantEmployeeFeignClientPort.saveRestaurantEmployee(restaurantEmployeeModel);
+
+    }
+
+    public  void validateRolesAuth(Usuario usuario){
+        String bearerToken = token.getBearerToken();
+        Rol rol = new Rol();
+
+
+
+        if(token.getUsuarioAutenticadoRol(bearerToken)=="ADMIN"){
+            rol.setId(2L);
+            usuario.setRol(rol);
+        }
     }
 
     @Override

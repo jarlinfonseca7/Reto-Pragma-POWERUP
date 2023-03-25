@@ -35,7 +35,7 @@ public class DishUseCase implements IDishServicePort {
         Long idOwnerAuth = token.getUsuarioAutenticadoId(bearerToken);
 
 
-         Long idOwnerRestaurant =  restaurantPersistencePort.getRestaurantById(dishModel.getRestauranteId().getId()).getId_propietario();
+         Long idOwnerRestaurant =  restaurantPersistencePort.getRestaurantById(dishModel.getRestauranteId().getId()).getIdPropietario();
 
 
 

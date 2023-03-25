@@ -10,6 +10,8 @@ public interface IRestaurantServicePort {
 
     RestaurantModel getRestaurantById(Long id);
 
+    RestaurantModel getRestaurantByIdPropietario(Long id_propietario);
+
     List<RestaurantModel> getAllRestaurants();
 
     void deleteRestaurantById(Long id);

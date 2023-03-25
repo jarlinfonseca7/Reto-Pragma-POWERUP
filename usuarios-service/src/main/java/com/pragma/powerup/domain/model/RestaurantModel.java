@@ -1,21 +1,20 @@
-package com.pragma.powerup.application.dto.request;
+package com.pragma.powerup.domain.model;
 
-import com.pragma.powerup.domain.model.DishModel;
-import com.pragma.powerup.infrastructure.out.jpa.entity.DishEntity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
-public class RestaurantRequestDto {
-
+@AllArgsConstructor
+@NoArgsConstructor
+public class RestaurantModel {
+    private Long id;
     private String nombre;
     private String nit;
     private String direccion;
     private String telefono;
     private String urlLogo;
     private Long idPropietario;
-
 }

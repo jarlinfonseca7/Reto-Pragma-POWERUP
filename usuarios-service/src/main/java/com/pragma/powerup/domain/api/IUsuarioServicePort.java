@@ -8,6 +8,8 @@ public interface IUsuarioServicePort {
 
     void saveUser(Usuario usuario);
 
+    void saveRestaurantEmployee(Usuario usuario);
+
     Usuario getUserById(Long id);
 
     Usuario getUserByCorreo(String correo);

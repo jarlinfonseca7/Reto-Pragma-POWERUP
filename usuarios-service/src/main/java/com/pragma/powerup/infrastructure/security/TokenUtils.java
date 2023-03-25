@@ -58,4 +58,49 @@ public class TokenUtils {
 
 
     }
+
+    public static String getCorreo(String token){
+        try {
+            Claims claims  = Jwts.parserBuilder()
+                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return  claims.getSubject();
+
+        }catch (JwtException e){
+            return  null;
+        }
+    }
+
+    public static Long getUsuarioAutenticadoId(String token){
+        try {
+            Claims claims  = Jwts.parserBuilder()
+                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.get("id", Long.class);
+
+        }catch (JwtException e){
+            return  null;
+        }
+    }
+
+    public static String getUsuarioAutenticadoRol(String token){
+        try {
+            Claims claims  = Jwts.parserBuilder()
+                    .setSigningKey(ACCESS_TOKEN_SECRET.getBytes())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            return claims.get("rol", String.class);
+
+        }catch (JwtException e){
+            return  null;
+        }
+    }
 }

@@ -59,7 +59,7 @@ public class RestaurantEntity {
     @Min(value = 1, message = "El id_propietario debe ser mayor a cero")
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     @Column(name = "id_propietario", nullable = false)
-    private Long id_propietario;
+    private Long idPropietario;
   /*@OneToMany(fetch = FetchType.EAGER,mappedBy = "restauranteId")
     private List<DishEntity> platos;*/
 }

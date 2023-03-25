@@ -26,8 +26,8 @@ public class RestaurantEmployeeEntity {
     private Long id;
 
     @Column(name = "resturante_id", nullable = false)
-    private String restaurant_id;
+    private String restaurantId;
 
     @Column(name = "empleado_id", nullable = false)
-    private String person_id;
+    private String personId;
 }

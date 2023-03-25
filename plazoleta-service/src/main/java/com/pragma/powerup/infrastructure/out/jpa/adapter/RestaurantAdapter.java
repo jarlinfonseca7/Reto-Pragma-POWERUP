@@ -30,6 +30,13 @@ public class RestaurantAdapter implements IRestaurantPersistencePort {
     }
 
     @Override
+    public RestaurantModel getRestaurantByIdPropietario(Long id_propietario) {
+        Optional<RestaurantEntity>  optionalRestaurantEntity= restaurantRepository.findByIdPropietario(id_propietario);
+        RestaurantEntity restaurantEntity = optionalRestaurantEntity.orElse(null);
+        return restaurantEntityMapper.toRestaurantModel(restaurantEntity);
+    }
+
+    @Override
     public List<RestaurantModel> getAllRestaurants() {
         List<RestaurantEntity> restaurantEntityList = (List<RestaurantEntity>) restaurantRepository.findAll();
         if(restaurantEntityList.isEmpty()){

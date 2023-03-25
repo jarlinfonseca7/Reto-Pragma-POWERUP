@@ -13,5 +13,8 @@ import java.util.List;
 public interface IUsuarioResponseMapper {
     UsuarioResponseDto toResponse(Usuario usuario);
 
+
     List<UsuarioResponseDto> toResponseList(List<Usuario> usuarioModelList);
+
+    //Usuario toUsuario(UsuarioResponseDto usuarioResponseDto);
 }
