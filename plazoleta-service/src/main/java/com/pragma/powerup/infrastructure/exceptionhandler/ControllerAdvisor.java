@@ -34,10 +34,15 @@ public class ControllerAdvisor {
                 //messageException = exception.getClass().toString();
                 break;
 
-            case "class com.pragma.powerup.infrastructure.exception.OwnerAuthMustBeOwnerRestuarant":
+            case "class com.pragma.powerup.domain.exception.OwnerAuthMustBeOwnerRestaurantException":
                 messageError = "Message Error";
                 messageException = "Authenticated owner must own the restaurant";
                 //messageException = exception.getClass().toString();
+                break;
+
+            case "class com.pragma.powerup.domain.exception.DishNotExistException":
+                messageError = "Message Error";
+                messageException = "The dish not exist";
                 break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

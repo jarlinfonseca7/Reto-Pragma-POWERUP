@@ -39,31 +39,43 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
     @Override
     public void saveUser(Usuario usuario) {
-       // RestaurantEmployeeModel restaurantEmployeeModel = new RestaurantEmployeeModel();
+        validateRolesAuthAndNot(usuario);
+        usuario.setClave(usuarioPasswordEncoderPort.encode(usuario.getClave()));
+        // validateAllPropertiesUser(usuario);
+        usuarioPersistencePort.saveUser(usuario);
+    }
+
+    private void validateRolesAuthAndNot(Usuario usuario){
         String bearerToken = token.getBearerToken();
-
         Rol rol = new Rol();
-        String rolS =token.getUsuarioAutenticadoRol(bearerToken);
-        System.out.println(rolS);
+        String rolS = "";
+        if(!(bearerToken==null)) {
 
-        if(rolS.equals("PROPIETARIO")){
-            rol.setId(3L);
-            usuario.setRol(rol);
-
-            usuario.setClave(usuarioPasswordEncoderPort.encode(usuario.getClave()));
-            // validateAllPropertiesUser(usuario);
-            usuarioPersistencePort.saveUser(usuario);
-
-
-
+            rolS = token.getUsuarioAutenticadoRol(bearerToken);
+            System.out.println(rolS);
         }
 
+        if(rolS.equals("PROPIETARIO")){
+            //Puede crear empleados
+            rol.setId(3L);
+        }else if(rolS.equals("ADMIN")){
+            //Puede crear propietarios
+            rol.setId(2L);
+        }else{
+            if(usuario.getRol().getId()==1){
+                //Si entra aqui, se registra un ADMIN
+                System.out.println("Se esta registrando un ADMIN");
+            }else{
+                //Se registra un cliente
+                rol.setId(4L);
+            }
 
-        // Obtener el rol y dependiendo del rol que le haya asignado,
+        }
+        //Si el Rol no es nulo, puede setearse al usuario, (Se valida ya que al ADMIN solo se le pasa el rol en el body del JSON)
+        if(!(rol.getId()==null)){
+            usuario.setRol(rol);
 
-        //usuario.setRol();
-
-
+        }
     }
 
     @Override

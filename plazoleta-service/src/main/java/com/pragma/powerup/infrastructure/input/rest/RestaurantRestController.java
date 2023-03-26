@@ -54,7 +54,8 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('PROPIETARIO', 'ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
     }
@@ -67,6 +68,7 @@ public class RestaurantRestController {
             @ApiResponse(responseCode = "404", description = "Restaurant no found",
                     content = @Content)})
     @GetMapping("/{id}")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<RestaurantResponseDto> getRestaurantById(@PathVariable(value = "id") Long restaurantId) {
         return ResponseEntity.ok(restaurantHandler.getRestaurantById(restaurantId));
     }

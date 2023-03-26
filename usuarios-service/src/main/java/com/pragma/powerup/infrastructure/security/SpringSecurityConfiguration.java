@@ -36,6 +36,7 @@ public class SpringSecurityConfiguration {
         return  http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/api/v1/user/").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

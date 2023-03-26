@@ -13,6 +13,8 @@ public interface IDishServicePort {
 
     void updateDish(Long id, DishModel dishModel);
 
+    void updateEnableDisableDish(Long idDish, Long flag);
+
     List<DishModel> getAllDishes();
 
     void deleteDishById(Long id);

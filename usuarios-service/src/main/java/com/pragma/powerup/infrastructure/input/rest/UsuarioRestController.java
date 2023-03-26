@@ -1,7 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.UsuarioRequestDto;
-import com.pragma.powerup.application.dto.response.ObjectResponseDto;
 import com.pragma.powerup.application.dto.response.UsuarioResponseDto;
 import com.pragma.powerup.application.handler.IUsuarioHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,14 +10,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
-import org.mindrot.jbcrypt.BCrypt;
-//import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +42,7 @@ public class UsuarioRestController {
     public ResponseEntity<Void> saveOwner(@Valid @RequestBody UsuarioRequestDto propietario) {
         // validar que el usuario autenticado sea un administrador
         // guardar el propietario en la base de datos y asignarle el rol de Propietario
-        propietario.setRol(2L);
+       // propietario.setRol(2L);
         usuarioHandler.saveUser(propietario);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -75,7 +69,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "Object already exists", content = @Content)
     })
     @PostMapping("/")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto){
         usuarioHandler.saveUser(usuarioRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);

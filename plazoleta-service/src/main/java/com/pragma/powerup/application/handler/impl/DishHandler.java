@@ -41,12 +41,10 @@ public class DishHandler implements IDishHandler {
         dishServicePort.updateDish(id, dishModel);
     }
 
-/*    @Override
-    public void updateDish(Long id, DishRequestDto dishRequestDto) {
-        DishModel dishModel = dishRequestMapper.toDish(dishRequestDto);
-        dishServicePort.updateDish(id, dishModel);
-    }*/
-
+    @Override
+    public void updateEnableDisableDish(Long idDish, Long flag) {
+         dishServicePort.updateEnableDisableDish(idDish, flag);
+    }
 
     @Override
     public List<DishResponseDto> getAllDishes() {
