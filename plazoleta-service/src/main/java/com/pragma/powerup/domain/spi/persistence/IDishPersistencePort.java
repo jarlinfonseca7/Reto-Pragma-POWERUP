@@ -10,6 +10,7 @@ public interface IDishPersistencePort {
     DishModel getDishById(Long id);
 
     List<DishModel> getAllDishes();
+    List<DishModel> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size);
 
     void deleteDishById(Long id);
 }

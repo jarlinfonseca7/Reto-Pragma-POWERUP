@@ -1,4 +1,4 @@
-package com.pragma.powerup.infrastructure.exception;
+package com.pragma.powerup.domain.exception;
 
 public class UserNotExistException extends  RuntimeException {
     public UserNotExistException() {

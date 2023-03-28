@@ -7,16 +7,21 @@ import com.pragma.powerup.infrastructure.out.jpa.entity.DishEntity;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IDishEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IDishRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class DishAdapter implements IDishPersistencePort {
+public class DishJpaAdapter implements IDishPersistencePort {
 
     private final IDishRepository dishRepository;
     private final IDishEntityMapper dishEntityMapper;
+
+
     @Override
     public DishModel saveDish(DishModel dishModel) {
         DishEntity dishEntity = dishRepository.save(dishEntityMapper.toEntity(dishModel));
@@ -38,6 +43,36 @@ public class DishAdapter implements IDishPersistencePort {
         }
         return dishEntityMapper.toDishModelList(dishEntityList);
     }
+
+    @Override
+    public List<DishModel> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size) {
+        Pageable pageable= PageRequest.of(page,size, Sort.by("categoriaId"));
+   /*     Page<DishEntity> dishEntityPage= dishRepository.findAllByRestauranteId(idRestaurante, pageable);
+        List<DishEntity> dishEntityList= dishEntityPage.getContent();
+        if(dishEntityList.isEmpty()){
+            throw new NoDataFoundException();
+        }
+
+
+        return dishEntityMapper.toDishModelList(dishEntityList);*/
+        return dishRepository.findAllByRestauranteIdId(idRestaurante, pageable)
+                .stream()
+                .map(dishEntityMapper::toDishModel)
+                .collect(Collectors.toList());
+    }
+
+/*
+    @Override
+    public List<DishRestaurantModel> getDishesByRestaurant(Integer idRestaurante, Integer page, Integer size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "nombre"));
+        Page<DishCustomEntity>  dishRestaurantPage= dishRepository.getDishesByRestaurant(idRestaurante,pageable);
+        List<DishCustomEntity> dishCustomEntityList = dishRestaurantPage.getContent();
+        if(dishCustomEntityList.isEmpty()){
+            throw new NoDataFoundException();
+        }
+        return dishCustomEntityMapper.toDishRestaurantModelList(dishCustomEntityList);
+    }
+*/
 
     @Override
     public void deleteDishById(Long id) {

@@ -1,6 +1,7 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.RestaurantRequestDto;
+import com.pragma.powerup.application.dto.response.RestaurantPaginationResponseDto;
 import com.pragma.powerup.application.dto.response.RestaurantResponseDto;
 import com.pragma.powerup.application.handler.IRestaurantHandler;
 //import com.pragma.powerup.infrastructure.feignclients.UserFeignClient;
@@ -30,8 +31,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RestaurantRestController {
 
-   // @Autowired
-    //private UserFeignClient userFeignClient;
     private final IRestaurantHandler restaurantHandler;
 
     @Operation(summary = "Add a new restaurant")
@@ -58,6 +57,20 @@ public class RestaurantRestController {
     //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RestaurantResponseDto>> getAllRestaurants() {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
+    }
+
+    @Operation(summary = "Get all restaurants")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "All restaurants returned",
+                    content = @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = RestaurantPaginationResponseDto.class)))),
+            @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
+    })
+    @GetMapping("/page/{page}/size/{size}")
+   // @PreAuthorize("hasAnyAuthority('PROPIETARIO', 'ADMIN')")
+    @PreAuthorize("hasAuthority('CLIENTE')")
+    public ResponseEntity<List<RestaurantPaginationResponseDto>> getAllRestaurantsPagination(@PathVariable(value = "page" )Integer page, @PathVariable(value = "size") Integer size) {
+        return ResponseEntity.ok(restaurantHandler.getRestaurantsWithPagination(page,size));
     }
 
     @Operation(summary = "Get restaurant by Id")

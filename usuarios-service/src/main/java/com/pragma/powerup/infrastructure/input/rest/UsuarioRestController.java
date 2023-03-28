@@ -40,9 +40,6 @@ public class UsuarioRestController {
     @PostMapping("/owner")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveOwner(@Valid @RequestBody UsuarioRequestDto propietario) {
-        // validar que el usuario autenticado sea un administrador
-        // guardar el propietario en la base de datos y asignarle el rol de Propietario
-       // propietario.setRol(2L);
         usuarioHandler.saveUser(propietario);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -56,12 +53,23 @@ public class UsuarioRestController {
     @PostMapping("/employee")
     @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<Void> saveEmployee(@Valid @RequestBody UsuarioRequestDto empleado) {
-       // empleado.setRol(3L);
         usuarioHandler.saveUser(empleado);
         usuarioHandler.saveRestaurantEmployee(empleado);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @Operation(summary = "Add a new client")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Client created", content = @Content),
+            @ApiResponse(responseCode = "409", description = "Client already exists", content = @Content)
+    })
+    @PostMapping("/client")
+    public ResponseEntity<Void> saveClient(@Valid @RequestBody UsuarioRequestDto cliente) {
+        usuarioHandler.saveUser(cliente);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
 
     @Operation(summary = "Add a new user")
     @ApiResponses(value = {
@@ -69,7 +77,6 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "409", description = "Object already exists", content = @Content)
     })
     @PostMapping("/")
-    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto){
         usuarioHandler.saveUser(usuarioRequestDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -83,7 +90,6 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
-   // @PreAuthorize("hasAuthority('PROPIETARIO')")
     public ResponseEntity<List<UsuarioResponseDto>> getAllUsers(){
         return ResponseEntity.ok(usuarioHandler.getAllUsers());
     }
@@ -126,6 +132,7 @@ public class UsuarioRestController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deteteUserById(@PathVariable(value = "id")Long usuarioId){
         usuarioHandler.deleteUserById(usuarioId);
         return new ResponseEntity<>(HttpStatus.OK);

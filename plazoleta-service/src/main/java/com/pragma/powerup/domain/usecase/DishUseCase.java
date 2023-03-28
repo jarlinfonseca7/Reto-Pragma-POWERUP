@@ -1,9 +1,11 @@
 package com.pragma.powerup.domain.usecase;
 
+import com.pragma.powerup.domain.api.ICategoryServicePort;
 import com.pragma.powerup.domain.api.IDishServicePort;
+import com.pragma.powerup.domain.exception.CategoryNotExistException;
 import com.pragma.powerup.domain.exception.DishNotExistException;
-import com.pragma.powerup.domain.exception.DomainException;
 import com.pragma.powerup.domain.exception.OwnerNotAuthenticatedException;
+import com.pragma.powerup.domain.exception.RestaurantNotExistException;
 import com.pragma.powerup.domain.model.DishModel;
 import com.pragma.powerup.domain.spi.bearertoken.IToken;
 import com.pragma.powerup.domain.spi.persistence.IDishPersistencePort;
@@ -21,35 +23,23 @@ public class DishUseCase implements IDishServicePort {
 
     private  final IToken token;
 
-    public DishUseCase(IDishPersistencePort dishPersistencePort, IRestaurantPersistencePort restaurantPersistencePort, IToken token) {
+    private  final ICategoryServicePort categoryServicePort;
+
+    public DishUseCase(IDishPersistencePort dishPersistencePort, IRestaurantPersistencePort restaurantPersistencePort, IToken token, ICategoryServicePort categoryServicePort) {
         this.dishPersistencePort = dishPersistencePort;
-        this.restaurantPersistencePort= restaurantPersistencePort;
+        this.restaurantPersistencePort = restaurantPersistencePort;
         this.token = token;
+        this.categoryServicePort = categoryServicePort;
     }
 
     @Override
     public void saveDish(DishModel dishModel) {
+        if(restaurantPersistencePort.getRestaurantById(dishModel.getRestauranteId().getId())==null) throw new RestaurantNotExistException();
+        if(categoryServicePort.getCategoryById(dishModel.getCategoriaId().getId())==null) throw new CategoryNotExistException();
+
+        validateOwnerAuthWithOwnerRestaurant(dishModel);
+
         dishModel.setActivo(true);
-        String bearerToken = token.getBearerToken();
-        System.out.println("Token: "+bearerToken);
-        String correo = token.getCorreo(bearerToken);
-
-
-        Long idOwnerAuth = token.getUsuarioAutenticadoId(bearerToken);
-
-
-         Long idOwnerRestaurant =  restaurantPersistencePort.getRestaurantById(dishModel.getRestauranteId().getId()).getIdPropietario();
-
-
-
-/*        System.out.println("ID del propietario autenticado: "+idOwnerAuth);
-        System.out.println("CORREO del propietario: "+correo);
-         System.out.println("ID del restaurante del plato: "+dishModel.getRestauranteId().getId());
-        System.out.println("ID del propietario del restaurante: "+ idOwnerRestaurant);*/
-         if(idOwnerAuth!=idOwnerRestaurant) throw new OwnerAuthMustBeOwnerRestaurantException();
-
-
-
         dishPersistencePort.saveDish(dishModel);
     }
 
@@ -101,6 +91,11 @@ public class DishUseCase implements IDishServicePort {
     @Override
     public List<DishModel> getAllDishes() {
         return dishPersistencePort.getAllDishes();
+    }
+
+    @Override
+    public List<DishModel> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size) {
+        return dishPersistencePort.findAllByRestauranteId(idRestaurante, page,size);
     }
 
     @Override

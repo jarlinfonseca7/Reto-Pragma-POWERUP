@@ -21,9 +21,9 @@ import com.pragma.powerup.infrastructure.out.feignclients.UserFeignClients;
 import com.pragma.powerup.infrastructure.out.feignclients.adapter.UserFeignAdapter;
 import com.pragma.powerup.infrastructure.out.feignclients.mapper.IUserDtoMapper;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter;
-import com.pragma.powerup.infrastructure.out.jpa.adapter.DishAdapter;
+import com.pragma.powerup.infrastructure.out.jpa.adapter.DishJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.ObjectJpaAdapter;
-import com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantAdapter;
+import com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.RestaurantEmployeeJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.ICategoryEntityMapper;
 import com.pragma.powerup.infrastructure.out.jpa.mapper.IDishEntityMapper;
@@ -54,6 +54,7 @@ public class BeanConfiguration {
 
     private final IDishEntityMapper dishEntityMapper;
 
+
     private final ICategoryRepository categoryRepository;
     private final ICategoryEntityMapper categoryEntityMapper;
 
@@ -79,7 +80,7 @@ public class BeanConfiguration {
 
     @Bean
     public IRestaurantPersistencePort restaurantPersistencePort(){
-        return new RestaurantAdapter(restaurantRepository, restaurantEntityMapper);
+        return new RestaurantJpaAdapter(restaurantRepository, restaurantEntityMapper);
     }
 
     @Bean
@@ -101,12 +102,12 @@ public class BeanConfiguration {
     @Bean
     public IDishPersistencePort dishPersistencePort(){
 
-        return new DishAdapter(dishRepository, dishEntityMapper);
+        return new DishJpaAdapter(dishRepository, dishEntityMapper);
     }
     @Bean
     public IDishServicePort dishServicePort(){
 
-        return new DishUseCase(dishPersistencePort(), restaurantPersistencePort(), token());
+        return new DishUseCase(dishPersistencePort(), restaurantPersistencePort(), token(), categoryServicePort());
     }
 
     @Bean

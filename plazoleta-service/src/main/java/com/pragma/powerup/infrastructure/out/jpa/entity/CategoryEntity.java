@@ -28,13 +28,10 @@ public class CategoryEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "plato_id", nullable = false)
+    @Column(name = "categoria_id", nullable = false)
     private Long id;
-    @NotBlank(message = "El nombre es requerido")
     @Column(name = "nombre", nullable = false)
     private String nombre;
-
-    @NotBlank(message = "La descripcion es requerida")
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
 

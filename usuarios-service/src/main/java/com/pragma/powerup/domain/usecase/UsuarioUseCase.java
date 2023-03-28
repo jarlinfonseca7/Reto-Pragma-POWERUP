@@ -15,8 +15,7 @@ import com.pragma.powerup.domain.spi.token.IToken;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class UsuarioUseCase implements IUsuarioServicePort {
     private final IUsuarioPersistencePort usuarioPersistencePort;
@@ -41,7 +40,6 @@ public class UsuarioUseCase implements IUsuarioServicePort {
     public void saveUser(Usuario usuario) {
         validateRolesAuthAndNot(usuario);
         usuario.setClave(usuarioPasswordEncoderPort.encode(usuario.getClave()));
-        // validateAllPropertiesUser(usuario);
         usuarioPersistencePort.saveUser(usuario);
     }
 
@@ -62,13 +60,17 @@ public class UsuarioUseCase implements IUsuarioServicePort {
             //Puede crear propietarios
             rol.setId(2L);
         }else{
+            if(usuario.getRol()==null){
+                rol.setId(4L);
+            }else
             if(usuario.getRol().getId()==1){
                 //Si entra aqui, se registra un ADMIN
                 System.out.println("Se esta registrando un ADMIN");
-            }else{
-                //Se registra un cliente
-                rol.setId(4L);
             }
+            //else{
+                //Se registra un cliente
+
+            //}
 
         }
         //Si el Rol no es nulo, puede setearse al usuario, (Se valida ya que al ADMIN solo se le pasa el rol en el body del JSON)
@@ -96,18 +98,6 @@ public class UsuarioUseCase implements IUsuarioServicePort {
 
     }
 
-    public  void validateRolesAuth(Usuario usuario){
-        String bearerToken = token.getBearerToken();
-        Rol rol = new Rol();
-
-
-
-        if(token.getUsuarioAutenticadoRol(bearerToken)=="ADMIN"){
-            rol.setId(2L);
-            usuario.setRol(rol);
-        }
-    }
-
     @Override
     public Usuario getUserById(Long id) {
         return usuarioPersistencePort.getUserById(id);
@@ -133,68 +123,5 @@ public class UsuarioUseCase implements IUsuarioServicePort {
     public void deleteUserById(Long id) {
         usuarioPersistencePort.deleteUserById(id);
     }
-
-/*
-
-    public void validateAllPropertiesUser(Usuario usuario) {
-        List<String> properties = Arrays.asList("nombre", "apellido", "documentoDeIdentidad", "celular",
-                "correo", "password(clave)");
-
-        //Validar que las propiedades no esten nulas o vacias
-        validatePropertyEmptyOrNull(usuario.getNombre(), properties.get(0));
-        validatePropertyEmptyOrNull(usuario.getApellido(), properties.get(1));
-        validatePropertyEmptyOrNull(usuario.getDocumentoDeIdentidad(), properties.get(2));
-        validatePropertyEmptyOrNull(usuario.getCelular(), properties.get(3));
-        validatePropertyEmptyOrNull(usuario.getCorreo(), properties.get(4));
-        validatePropertyEmptyOrNull(usuario.getClave(), properties.get(5));
-
-        //Validar el DNI, celular y correo
-        validateDNI(usuario.getDocumentoDeIdentidad());
-        validateCellPhone(usuario.getCelular());
-        validateEmail(usuario.getCorreo());
-
-    }
-
-    public void validatePropertyEmptyOrNull(Object property, String description) {
-        if (property == null) throw new DomainException("El " + description + " no puede estar nulo");
-
-        if (property instanceof String) {
-            String propertyS = String.valueOf(property);
-            if (propertyS.isEmpty()) throw new DomainException("El " + description + " no puede estar vacío");
-        } else {
-            Long propertyL = (Long) property;
-            if (propertyL.toString().isEmpty())
-                throw new DomainException("El " + description + " no puede estar vacío");
-        }
-
-    }
-
-    public void validateDNI(String dni) {
-        if (!dni.matches("\\d+")) throw new DomainException("El documentoDeIdentidad solo puede ser númerico");
-    }
-
-    public void validateEmail(String email) {
-        Pattern pattern = Pattern
-                .compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-
-        Matcher mather = pattern.matcher(email);
-        if (!mather.find()) throw new DomainException("El correo debe ser válido");
-    }
-
-    public void validateCellPhone(String cellphone) {
-        if (cellphone.length() > 13) {
-            throw new DomainException("El celular debe contener un máximo de 13 caracteres");
-        }
-        String regex = "^\\+?\\d{1,12}$";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(cellphone);
-
-        if (!matcher.matches()) throw new DomainException("El celular debe cumplir con máximo 13 caracteres y es " +
-                "opcionnal usar al inicio el simbolo +");
-    }
-*/
-
 
 }

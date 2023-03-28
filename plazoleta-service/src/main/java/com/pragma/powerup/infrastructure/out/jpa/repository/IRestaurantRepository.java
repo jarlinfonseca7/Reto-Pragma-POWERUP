@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
 
-public interface IRestaurantRepository extends PagingAndSortingRepository<RestaurantEntity, Long> {
+public interface IRestaurantRepository extends JpaRepository<RestaurantEntity, Long> {
 
     Optional<RestaurantEntity> findByIdPropietario(Long idPropietario);
 }

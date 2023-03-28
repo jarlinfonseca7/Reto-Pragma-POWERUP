@@ -1,3 +1,4 @@
+/*
 package com.pragma.powerup.application.exceptionhandler;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -43,3 +44,4 @@ public class ControllerAdvisorApplication {
 
 
 }
+*/

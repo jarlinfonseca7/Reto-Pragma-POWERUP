@@ -39,10 +39,28 @@ public class Plazoleta implements CommandLineRunner {
 
 		Optional<CategoryEntity> categoryEntity = categoryRepository.findById(1L);
 		CategoryEntity categoryEntity1 = categoryEntity.orElse(null);
+
+
 		// Obteniendo ID de la categoria
-		System.out.println(categoryEntity1.getId());
+		 System.out.println(categoryEntity1.getId());
 		// Obteniendo los platos de la categoria
 		//System.out.println(categoryEntity1.getPlatos());
+
+/*
+		List<Object[]> dishPrueba = dishRepository.getDishesByRestaurant(3);
+		for (Object[] valor:dishPrueba) {
+			System.out.println(valor[0]);
+			System.out.println(valor[1]);
+			System.out.println(valor[2]);
+			System.out.println(valor[3]);
+			System.out.println(valor[4]);
+			System.out.println(valor[5]);
+			System.out.println(valor[6]);
+*/
+
+
+			//System.out.println(valor.getPrecio());
+		//}
 
 
 

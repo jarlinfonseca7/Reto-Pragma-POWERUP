@@ -56,6 +56,15 @@ public class DishHandler implements IDishHandler {
     }
 
     @Override
+    public List<DishResponseDto> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size) {
+        List<DishModel> dishModelList = dishServicePort.findAllByRestauranteId(idRestaurante,page,size);
+        if(dishModelList.isEmpty()){
+            throw new NoDataFoundException();
+        }
+        return dishResponseMapper.toResponseList(dishModelList);
+    }
+
+    @Override
     public void deleleDishById(Long id) {
         dishServicePort.deleteDishById(id);
     }

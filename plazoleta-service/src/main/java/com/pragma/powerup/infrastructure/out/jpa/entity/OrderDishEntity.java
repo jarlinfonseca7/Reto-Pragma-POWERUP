@@ -10,19 +10,29 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "objectTable")
+@Table(name = "pedidos_platos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class ObjectEntity {
+public class OrderDishEntity {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "object_id", nullable = false)
+    @Column(name = "pedido_plato_id", nullable = false)
     private Long id;
-    @Column(length = 50)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private OrderEntity pedido;
+    @ManyToOne
+    @JoinColumn(name = "plato_id", nullable = false)
+    private DishEntity plato;
+    @Column(name = "cantidad", nullable = false)
+    private String cantidad;
+
 }

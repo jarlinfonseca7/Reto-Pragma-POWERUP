@@ -14,5 +14,6 @@ public interface IDishHandler {
 
     void updateEnableDisableDish(Long idDish, Long flag);
     List<DishResponseDto> getAllDishes();
+    List<DishResponseDto> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size);
     void deleleDishById(Long id);
 }

@@ -33,31 +33,20 @@ public class DishEntity {
     @Id
     @Column(name = "plato_id", nullable = false)
     private Long id;
-
-    @NotBlank(message = "El nombre es requerido")
     @Column(name = "nombre", nullable = false)
     private String nombre;
-
-    @NotBlank(message = "El precio es requerido")
     @Column(name = "precio", nullable = false)
     private String precio;
-    @NotBlank(message = "La descripcion es requerida")
     @Column(name = "descripcion", nullable = false)
     private String descripcion;
-
-    @NotBlank(message = "La urlImagen es requerida")
     @Column(name = "url_imagen", nullable = false)
     private String urlImagen;
-
-    @NotNull(message = "El activo es requerido (true(1) o false(0))")
     @Column(name = "activo")
     private Boolean activo;
-
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="restaurant_id")
     private RestaurantEntity restauranteId;
-
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="category_id")

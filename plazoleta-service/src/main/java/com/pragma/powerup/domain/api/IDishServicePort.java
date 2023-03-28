@@ -17,5 +17,7 @@ public interface IDishServicePort {
 
     List<DishModel> getAllDishes();
 
+    List<DishModel> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size);
+
     void deleteDishById(Long id);
 }
