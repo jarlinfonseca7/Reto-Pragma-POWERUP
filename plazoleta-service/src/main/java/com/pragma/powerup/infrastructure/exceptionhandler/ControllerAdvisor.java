@@ -60,6 +60,10 @@ public class ControllerAdvisor {
                 messageError = "Message Error";
                 messageException = "The category not exist";
                 break;
+            case "class com.pragma.powerup.domain.exception.ClientHasAnOrderException":
+                messageError = "Message Error";
+                messageException = "The client has an order";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

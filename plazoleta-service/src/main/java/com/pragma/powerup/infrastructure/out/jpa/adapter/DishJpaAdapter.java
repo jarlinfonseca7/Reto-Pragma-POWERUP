@@ -47,32 +47,12 @@ public class DishJpaAdapter implements IDishPersistencePort {
     @Override
     public List<DishModel> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size) {
         Pageable pageable= PageRequest.of(page,size, Sort.by("categoriaId"));
-   /*     Page<DishEntity> dishEntityPage= dishRepository.findAllByRestauranteId(idRestaurante, pageable);
-        List<DishEntity> dishEntityList= dishEntityPage.getContent();
-        if(dishEntityList.isEmpty()){
-            throw new NoDataFoundException();
-        }
-
-
-        return dishEntityMapper.toDishModelList(dishEntityList);*/
         return dishRepository.findAllByRestauranteIdId(idRestaurante, pageable)
                 .stream()
                 .map(dishEntityMapper::toDishModel)
                 .collect(Collectors.toList());
     }
 
-/*
-    @Override
-    public List<DishRestaurantModel> getDishesByRestaurant(Integer idRestaurante, Integer page, Integer size) {
-        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "nombre"));
-        Page<DishCustomEntity>  dishRestaurantPage= dishRepository.getDishesByRestaurant(idRestaurante,pageable);
-        List<DishCustomEntity> dishCustomEntityList = dishRestaurantPage.getContent();
-        if(dishCustomEntityList.isEmpty()){
-            throw new NoDataFoundException();
-        }
-        return dishCustomEntityMapper.toDishRestaurantModelList(dishCustomEntityList);
-    }
-*/
 
     @Override
     public void deleteDishById(Long id) {

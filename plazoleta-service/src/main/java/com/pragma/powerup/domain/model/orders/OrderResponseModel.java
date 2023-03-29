@@ -1,5 +1,4 @@
-package com.pragma.powerup.domain.model;
-
+package com.pragma.powerup.domain.model.orders;
 
 
 import lombok.AllArgsConstructor;
@@ -8,15 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderModel {
+public class OrderResponseModel {
     private Long id;
     private Long idCliente;
+    private Long idChef;
     private Date fecha;
-    private String estado;
-    private RestaurantEmployeeModel chef;
-    private RestaurantModel restaurante;
+    private List<OrderDishResponseModel> pedidoPlatos;
 }

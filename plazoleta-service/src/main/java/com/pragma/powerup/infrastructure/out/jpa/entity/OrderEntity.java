@@ -41,7 +41,7 @@ public class OrderEntity {
     private RestaurantEmployeeEntity chef;
     @ManyToOne
     @JoinColumn(name = "restaurante_id", nullable = false)
-    private RestaurantEntity resturante;
+    private RestaurantEntity restaurante;
 
 
 }
