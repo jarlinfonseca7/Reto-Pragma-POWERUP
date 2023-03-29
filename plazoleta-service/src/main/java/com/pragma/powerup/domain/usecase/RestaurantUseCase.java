@@ -50,7 +50,7 @@ public class RestaurantUseCase implements IRestaurantServicePort {
 
     @Override
     public List<RestaurantModel> getRestaurantsWithPagination(Integer page, Integer size) {
-        if(page>=0) page--;
+      //  if(page>=0) page--;
         return restaurantPersistencePort.getRestaurantsWithPagination(page,size);
     }
 
