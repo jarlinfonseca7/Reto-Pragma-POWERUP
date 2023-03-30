@@ -103,6 +103,10 @@ public class ControllerAdvisor {
                 messageError = "Message Error";
                 messageException = "The authenticated client has to be the same client of the order";
                 break;
+            case "class com.pragma.powerup.domain.exception.OwnerMustOnlyOwnARestaurantException":
+                messageError = "Message Error";
+                messageException = "The owner must only own a restaurant";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));

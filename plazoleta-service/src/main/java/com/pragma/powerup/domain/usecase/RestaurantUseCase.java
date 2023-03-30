@@ -1,12 +1,14 @@
 package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
+import com.pragma.powerup.domain.exception.OwnerMustOnlyOwnARestaurantException;
 import com.pragma.powerup.domain.model.RestaurantModel;
 import com.pragma.powerup.domain.model.UserModel;
 import com.pragma.powerup.domain.spi.persistence.IRestaurantPersistencePort;
 import com.pragma.powerup.domain.spi.feignclients.IUserFeignClientPort;
 import com.pragma.powerup.domain.exception.UserMustBeOwnerException;
 import com.pragma.powerup.domain.exception.UserNotExistException;
+import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 
 import java.util.List;
 
@@ -29,6 +31,10 @@ public class RestaurantUseCase implements IRestaurantServicePort {
         UserModel user = userFeignClient.getUserById(restaurantModel.getIdPropietario());
         //System.out.println(user.getRol());
         if (user.getRol().getId() != 2) throw new UserMustBeOwnerException();
+
+         RestaurantModel restaurantModel2 =restaurantPersistencePort.getRestaurantByIdPropietario(user.getId());
+             if(restaurantModel2 != null) throw new OwnerMustOnlyOwnARestaurantException();
+
       //  System.out.println("Es un propietario");
         restaurantPersistencePort.saveRestaurant(restaurantModel);
     }
