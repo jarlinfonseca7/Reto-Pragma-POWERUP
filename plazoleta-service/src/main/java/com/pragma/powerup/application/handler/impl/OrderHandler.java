@@ -35,4 +35,24 @@ public class OrderHandler  implements IOrderHandler {
         return orderResponseMapper.toOrderResponseList(orderServicePort.getAllOrdersWithPagination(page,size,estado));
     }
 
+    @Override
+    public void takeOrderAndUpdateStatus(Long idOrder, String estado) {
+        orderServicePort.takeOrderAndUpdateStatus(idOrder,estado);
+    }
+
+    @Override
+    public void updateAndNotifyOrderReady(Long idOrder) {
+        orderServicePort.updateAndNotifyOrderReady(idOrder);
+    }
+
+    @Override
+    public void deliverOrder(Long idOrder, String pin) {
+        orderServicePort.deliverOrder(idOrder,pin);
+    }
+
+    @Override
+    public void cancelOrder(Long idOrder) {
+        orderServicePort.cancelOrder(idOrder);
+    }
+
 }

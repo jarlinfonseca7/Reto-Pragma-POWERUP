@@ -60,7 +60,7 @@ public class UsuarioUseCase implements IUsuarioServicePort {
             //Puede crear propietarios
             rol.setId(2L);
         }else{
-            if(usuario.getRol()==null){
+            if(usuario.getRol().getId()==null){
                 rol.setId(4L);
             }else
             if(usuario.getRol().getId()==1){

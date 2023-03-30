@@ -9,7 +9,12 @@ public interface IOrderHandler {
     void saveOrder(OrderRequestDto orderRequest);
     List<OrderResponseDto> getAllOrdersWithPagination(Integer page, Integer size, String estado);
 
-    //List<OrderResponseDto> getOrdersPaginated();
+    void takeOrderAndUpdateStatus(Long idOrder, String estado);
 
-    //void saveOrderDish(OrderRequestDto orderRequestDto);
+    void updateAndNotifyOrderReady(Long idOrder);
+
+    void deliverOrder(Long idOrder, String pin);
+
+    void cancelOrder(Long idOrder);
+
 }

@@ -7,6 +7,7 @@ import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.api.IRestaurantEmployeeServicePort;
 import com.pragma.powerup.domain.api.IRestaurantServicePort;
 import com.pragma.powerup.domain.spi.bearertoken.IToken;
+import com.pragma.powerup.domain.spi.feignclients.ITwilioFeignClientPort;
 import com.pragma.powerup.domain.spi.persistence.ICategoryPersistencePort;
 import com.pragma.powerup.domain.spi.persistence.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.persistence.IObjectPersistencePort;
@@ -20,8 +21,11 @@ import com.pragma.powerup.domain.usecase.ObjectUseCase;
 import com.pragma.powerup.domain.usecase.OrderUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantEmployeeUseCase;
 import com.pragma.powerup.domain.usecase.RestaurantUseCase;
+import com.pragma.powerup.infrastructure.out.feignclients.TwilioFeignClients;
 import com.pragma.powerup.infrastructure.out.feignclients.UserFeignClients;
+import com.pragma.powerup.infrastructure.out.feignclients.adapter.TwilioFeignAdapter;
 import com.pragma.powerup.infrastructure.out.feignclients.adapter.UserFeignAdapter;
+import com.pragma.powerup.infrastructure.out.feignclients.mapper.ITwilioMapper;
 import com.pragma.powerup.infrastructure.out.feignclients.mapper.IUserDtoMapper;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.CategoryJpaAdapter;
 import com.pragma.powerup.infrastructure.out.jpa.adapter.DishJpaAdapter;
@@ -78,6 +82,9 @@ public class BeanConfiguration {
 
     private  final IOrderDishRepository orderDishRepository;
     private final IOrderDishEntityMapper orderDishEntityMapper;
+
+    private final TwilioFeignClients twilioFeignClients;
+    private final ITwilioMapper twilioMapper;
 
 
 
@@ -151,6 +158,11 @@ public class BeanConfiguration {
 
     @Bean
     public IOrderServicePort orderServicePort(){
-        return new OrderUseCase(orderPersistencePort(), token(), restaurantPersistencePort(), dishPersistencePort(), restaurantEmployeePersistencePort());
+        return new OrderUseCase(orderPersistencePort(), token(), restaurantPersistencePort(), dishPersistencePort(), restaurantEmployeePersistencePort(), twilioFeignClientPort(), userFeignClientPort());
+    }
+
+    @Bean
+    ITwilioFeignClientPort twilioFeignClientPort(){
+        return new TwilioFeignAdapter(twilioFeignClients, twilioMapper);
     }
 }

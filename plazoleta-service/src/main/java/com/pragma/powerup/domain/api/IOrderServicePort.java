@@ -14,5 +14,13 @@ public interface IOrderServicePort {
 
     List<OrderResponseModel> getAllOrdersWithPagination(Integer page, Integer size, String estado);
 
+    void takeOrderAndUpdateStatus(Long idOrder, String estado);
+
+    void updateAndNotifyOrderReady(Long idOrder);
+
+    void deliverOrder(Long idOrder, String pin);
+
+    void cancelOrder(Long idOrder);
+
     //void saveOrderDish(OrderRequestModel orderRequestModel);
 }
