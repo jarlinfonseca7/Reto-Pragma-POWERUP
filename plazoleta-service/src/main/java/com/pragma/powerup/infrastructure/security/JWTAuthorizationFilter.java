@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,11 +27,13 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         try{
 
             String bearerToken = request.getHeader("Authorization");
-            if(bearerToken == null && !bearerToken.startsWith("Bearer ")){
-                filterChain.doFilter(request, response);
+
+            String correo ="";
+            if(bearerToken!=null && bearerToken.startsWith("Bearer ") ){
+               correo= TokenUtils.getCorreo(bearerToken.replace("Bearer ",""));
             }
-            String correo = TokenUtils.getCorreo(bearerToken.replace("Bearer ",""));
-            if(correo!=null && SecurityContextHolder.getContext().getAuthentication() == null){
+
+            if(correo!="" && correo!=null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = userDetailsService.loadUserByUsername(correo);
                 if(correo.equals(userDetails.getUsername())){
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
@@ -43,8 +44,10 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
                     usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
                 }
+
             }
             filterChain.doFilter(request, response);
+
 
         }catch (JwtException jwt){
 

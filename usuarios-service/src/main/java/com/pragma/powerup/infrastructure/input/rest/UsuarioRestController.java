@@ -73,8 +73,8 @@ public class UsuarioRestController {
 
     @Operation(summary = "Add a new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Object created", content = @Content),
-            @ApiResponse(responseCode = "409", description = "Object already exists", content = @Content)
+            @ApiResponse(responseCode = "201", description = "User created", content = @Content),
+            @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)
     })
     @PostMapping("/")
     public ResponseEntity<Void> saveUser(@Valid @RequestBody UsuarioRequestDto usuarioRequestDto){
@@ -94,39 +94,38 @@ public class UsuarioRestController {
         return ResponseEntity.ok(usuarioHandler.getAllUsers());
     }
 
-
-
-    @Operation(summary = "Get user by Id")
+    @Operation(summary = "Get a user by ID")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuario encontrado",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UsuarioResponseDto.class))}),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
-                    content = @Content)})
+            @ApiResponse(responseCode = "200", description = "User returned", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
    @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDto> getUserById(@PathVariable(value = "id") Long usuarioId) {
         return  ResponseEntity.ok(usuarioHandler.getUserById(usuarioId));
     }
 
-    @Operation(summary = "Get user by correo")
+    @Operation(summary = "Get a user by email")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Usuario encontrado",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UsuarioResponseDto.class))}),
-            @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
-                    content = @Content)})
+            @ApiResponse(responseCode = "200", description = "User returned", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
     @GetMapping("/email/{email}")
     public ResponseEntity<UsuarioResponseDto> getUserByCorreo(@PathVariable(value = "email") String correo){
         return  ResponseEntity.ok((usuarioHandler.getUserByCorreo(correo)));
     }
 
+    @Operation(summary = "Exist a user by ID (Boolean)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User returned", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
     @GetMapping("existsUserById/{id}")
     public ResponseEntity<Boolean> existsUserById(@PathVariable(value = "id") Long usuarioId){
         return  ResponseEntity.ok(usuarioHandler.existsUserById(usuarioId));
     }
 
 
-    @Operation(summary = "Detele a user")
+    @Operation(summary = "Detele a user by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User deleted", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)

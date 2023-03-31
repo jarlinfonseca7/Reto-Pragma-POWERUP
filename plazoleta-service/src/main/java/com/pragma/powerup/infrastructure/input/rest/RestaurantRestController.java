@@ -59,9 +59,9 @@ public class RestaurantRestController {
         return ResponseEntity.ok(restaurantHandler.getAllRestaurants());
     }
 
-    @Operation(summary = "Get all restaurants")
+    @Operation(summary = "Get all restaurants with pagination")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All restaurants returned",
+            @ApiResponse(responseCode = "200", description = "All restaurants returned paginated",
                     content = @Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = RestaurantPaginationResponseDto.class)))),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
@@ -86,13 +86,12 @@ public class RestaurantRestController {
         return ResponseEntity.ok(restaurantHandler.getRestaurantById(restaurantId));
     }
 
+
     @Operation(summary = "Get restaurant by Id_propietario")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Restaurant returned",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = RestaurantResponseDto.class))}),
-            @ApiResponse(responseCode = "404", description = "Restaurant no found",
-                    content = @Content)})
+            @ApiResponse(responseCode = "200", description = "Restaurant deleted", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Restaurant not found", content = @Content)
+    })
     @GetMapping("/restaurantByIdPropietario/{id}")
     public ResponseEntity<RestaurantResponseDto> getRestaurantByIdPropietario(@PathVariable(value = "id") Long idPropietario) {
         return ResponseEntity.ok(restaurantHandler.getRestaurantByIdPropietario(idPropietario));
