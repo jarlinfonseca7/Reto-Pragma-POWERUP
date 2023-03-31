@@ -1,14 +1,19 @@
 package com.pragma.powerup.domain.usecase;
 
 
+import com.pragma.powerup.domain.model.RestaurantEmployeeModel;
+import com.pragma.powerup.domain.model.RestaurantModel;
 import com.pragma.powerup.domain.model.Rol;
 import com.pragma.powerup.domain.model.Usuario;
+import com.pragma.powerup.domain.spi.feignclients.IRestaurantEmployeeFeignClientPort;
+import com.pragma.powerup.domain.spi.feignclients.IRestaurantFeingClientPort;
 import com.pragma.powerup.domain.spi.passwordencoder.IUsuarioPasswordEncoderPort;
 import com.pragma.powerup.domain.spi.persistence.IUsuarioPersistencePort;
 import com.pragma.powerup.domain.spi.token.IToken;
 import com.pragma.powerup.factory.FactoryUsersDataTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -29,6 +34,12 @@ class UsuarioUseCaseTest {
 
     @Mock
     IToken token;
+
+    @Mock
+    IRestaurantFeingClientPort restaurantFeingClientPort;
+
+    @Mock
+    IRestaurantEmployeeFeignClientPort restaurantEmployeeFeignClientPort;
 
 
     @Test
@@ -59,6 +70,35 @@ class UsuarioUseCaseTest {
         //Then
         Mockito.verify(usuarioPasswordEncoderPort).encode("password");
         Mockito.verify(usuarioPersistencePort).saveUser(Mockito.any(Usuario.class));
+    }
+
+    @Test
+    public void mustSaveRestaurantEmployee() {
+        // Mocking data
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("test@example.com");
+
+        RestaurantModel restaurantModel = new RestaurantModel();
+        restaurantModel.setId(123L);
+
+        Usuario usuarioModel = new Usuario();
+        usuarioModel.setId(456L);
+
+        Mockito.when(token.getBearerToken()).thenReturn("BearerToken");
+        Mockito.when(token.getUsuarioAutenticadoId("BearerToken")).thenReturn(789L);
+        Mockito.when(restaurantFeingClientPort.getRestaurantByIdPropietario(789L)).thenReturn(restaurantModel);
+        Mockito.when(usuarioPersistencePort.getUserByCorreo(usuario.getCorreo())).thenReturn(usuarioModel);
+
+        // Execute the method to be tested
+        usuarioUseCase.saveRestaurantEmployee(usuario);
+
+        // Verify the expected behavior
+        ArgumentCaptor<RestaurantEmployeeModel> argument = ArgumentCaptor.forClass(RestaurantEmployeeModel.class);
+        Mockito.verify(restaurantEmployeeFeignClientPort, Mockito.times(1)).saveRestaurantEmployee(argument.capture());
+
+        RestaurantEmployeeModel savedRestaurantEmployee = argument.getValue();
+        assertEquals(savedRestaurantEmployee.getRestaurantId(), "123");
+        assertEquals(savedRestaurantEmployee.getPersonId(), "456");
     }
 
     @Test

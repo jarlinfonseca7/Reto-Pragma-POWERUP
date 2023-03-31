@@ -67,16 +67,11 @@ public class UsuarioUseCase implements IUsuarioServicePort {
                 //Si entra aqui, se registra un ADMIN
                 System.out.println("Se esta registrando un ADMIN");
             }
-            //else{
-                //Se registra un cliente
-
-            //}
 
         }
         //Si el Rol no es nulo, puede setearse al usuario, (Se valida ya que al ADMIN solo se le pasa el rol en el body del JSON)
         if(!(rol.getId()==null)){
             usuario.setRol(rol);
-
         }
     }
 

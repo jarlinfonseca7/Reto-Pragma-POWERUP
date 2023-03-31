@@ -59,7 +59,7 @@ class RestaurantUseCaseTest {
     }
 
     @Test
-    void testSaveRestaurantWithNonExistingUser() {
+    void saveRestaurantWithNonExistingUser() {
         RestaurantModel restaurantModel = new RestaurantModel();
         restaurantModel.setId(1L);
         restaurantModel.setNombre("Frisby");
@@ -74,7 +74,7 @@ class RestaurantUseCaseTest {
     }
 
     @Test
-    void testSaveRestaurantWithNonOwnerUser() {
+    void saveRestaurantWithNonOwnerUser() {
         RestaurantModel restaurantModel = new RestaurantModel();
         restaurantModel.setId(1L);
         restaurantModel.setNombre("Frisby");
@@ -96,7 +96,7 @@ class RestaurantUseCaseTest {
     }
 
     @Test
-    void testSaveRestaurantWithOwnerAlreadyOwningARestaurant() {
+    void saveRestaurantWithOwnerAlreadyOwningARestaurant() {
         RestaurantModel restaurantModel = new RestaurantModel();
         restaurantModel.setId(1L);
         restaurantModel.setNombre("Frisby");
@@ -119,7 +119,7 @@ class RestaurantUseCaseTest {
     }
 
     @Test
-    public void testGetRestaurantsWithPagination() {
+    public void getRestaurantsWithPagination() {
         // Configuramos los valores de prueba
         Integer page = 1;
         Integer size = 10;

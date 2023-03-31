@@ -92,9 +92,6 @@ class OrderUseCaseTest {
         Mockito.when(dishPersistencePort.getDishById(ArgumentMatchers.anyLong())).thenReturn(dishModel);
 
         Mockito.when(orderPersistencePort.saveOrder(ArgumentMatchers.any(OrderModel.class))).thenReturn(new OrderModel());
-      //  Mockito.when(orderPersistencePort.saveOrderDish(ArgumentMatchers.anyList()));
-
-        //OrderUseCase orderUseCase = new OrderUseCase(orderPersistencePort, token, restaurantPersistencePort, dishPersistencePort, restaurantEmployeePersistencePort, twilioFeignClientPort, userFeignClientPort);
 
         // Act
         orderUseCase.saveOrder(orderRequestModel);
@@ -260,7 +257,6 @@ class OrderUseCaseTest {
 
     @Test
     public void takeOrderAndUpdateStatus_whenOrderNotExists_thenThrowOrderNotExistException() {
-        // Arrange
         Long idOrder = 1L;
         String estado = "EN_PREPARACION";
 

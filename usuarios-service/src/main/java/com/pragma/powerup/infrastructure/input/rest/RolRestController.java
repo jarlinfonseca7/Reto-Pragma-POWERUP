@@ -1,7 +1,6 @@
 package com.pragma.powerup.infrastructure.input.rest;
 
 import com.pragma.powerup.application.dto.request.RolRequestDto;
-import com.pragma.powerup.application.dto.response.ObjectResponseDto;
 import com.pragma.powerup.application.dto.response.RolResponseDto;
 import com.pragma.powerup.application.handler.IRolHandler;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +44,7 @@ public class RolRestController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "All roles returned",
                     content = @Content(mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = ObjectResponseDto.class)))),
+                            array = @ArraySchema(schema = @Schema(implementation = RolResponseDto.class)))),
             @ApiResponse(responseCode = "404", description = "No data found", content = @Content)
     })
     @GetMapping("/")
