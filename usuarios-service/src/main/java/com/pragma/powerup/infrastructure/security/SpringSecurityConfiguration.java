@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -36,7 +37,7 @@ public class SpringSecurityConfiguration {
         return  http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/","/api/v1/user/client").permitAll()
+                .antMatchers("/api/v1/user/","/api/v1/user/client","/swagger-ui/**", "/swagger-resources/**","/v3/api-docs/**", "/v2/api-docs/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -47,6 +48,8 @@ public class SpringSecurityConfiguration {
                 .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+
 
 /*
     @Bean

@@ -25,6 +25,7 @@ public class WebSecurityConfig {
         return  http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/swagger-ui/**", "/swagger-resources/**","/v3/api-docs/**", "/v2/api-docs/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

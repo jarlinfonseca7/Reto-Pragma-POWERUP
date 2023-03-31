@@ -8,7 +8,6 @@ import com.pragma.powerup.domain.spi.persistence.IRestaurantPersistencePort;
 import com.pragma.powerup.domain.spi.feignclients.IUserFeignClientPort;
 import com.pragma.powerup.domain.exception.UserMustBeOwnerException;
 import com.pragma.powerup.domain.exception.UserNotExistException;
-import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 
 import java.util.List;
 

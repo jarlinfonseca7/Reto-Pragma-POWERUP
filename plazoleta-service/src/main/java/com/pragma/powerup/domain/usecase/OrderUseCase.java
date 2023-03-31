@@ -4,10 +4,12 @@ package com.pragma.powerup.domain.usecase;
 import com.pragma.powerup.domain.api.IOrderServicePort;
 import com.pragma.powerup.domain.exception.ClientAuthMustBeEqualsClientOrderException;
 import com.pragma.powerup.domain.exception.ClientHasAnOrderException;
+import com.pragma.powerup.domain.exception.DishIsInactiveException;
 import com.pragma.powerup.domain.exception.DishNotExistException;
 import com.pragma.powerup.domain.exception.DishRestaurantIdNotIsEqualsOrderException;
 import com.pragma.powerup.domain.exception.NoCancelOrderStatusCanceladoException;
 import com.pragma.powerup.domain.exception.NoCancelOrdersPreparacionOrListoException;
+import com.pragma.powerup.domain.exception.NoDataFoundException;
 import com.pragma.powerup.domain.exception.OnlyCancelOrderStatusPendienteException;
 import com.pragma.powerup.domain.exception.OrderNotExistException;
 import com.pragma.powerup.domain.exception.OrderRestaurantMustBeEqualsEmployeeRestaurantException;
@@ -33,7 +35,7 @@ import com.pragma.powerup.domain.spi.persistence.IDishPersistencePort;
 import com.pragma.powerup.domain.spi.persistence.IOrderPersistencePort;
 import com.pragma.powerup.domain.spi.persistence.IRestaurantEmployeePersistencePort;
 import com.pragma.powerup.domain.spi.persistence.IRestaurantPersistencePort;
-import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
+//import com.pragma.powerup.infrastructure.exception.NoDataFoundException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,8 +94,8 @@ public class OrderUseCase implements IOrderServicePort {
         for (int i=0; i<orderDishes.size();i++) {
             DishModel dishModel = dishPersistencePort.getDishById(orderDishes.get(i).getIdPlatos());
             if (dishModel == null) throw new DishNotExistException();
-            if (dishModel.getRestauranteId().getId() != orderModel2.getRestaurante().getId())
-                throw new DishRestaurantIdNotIsEqualsOrderException();
+            if (dishModel.getRestauranteId().getId() != orderModel2.getRestaurante().getId()) throw new DishRestaurantIdNotIsEqualsOrderException();
+            if(!dishModel.getActivo()) throw new DishIsInactiveException();
         }
         OrderModel order =orderPersistencePort.saveOrder(orderModel2);
 
@@ -253,7 +255,7 @@ public class OrderUseCase implements IOrderServicePort {
         orderPersistencePort.saveOrder(orderModel);
     }
 
-    private String validatePin(UserModel userModel){
+    public String validatePin(UserModel userModel){
         String pinDocumento = userModel.getDocumentoDeIdentidad();
         String pinNombre = userModel.getNombre();
         String pinApellido = userModel.getApellido();

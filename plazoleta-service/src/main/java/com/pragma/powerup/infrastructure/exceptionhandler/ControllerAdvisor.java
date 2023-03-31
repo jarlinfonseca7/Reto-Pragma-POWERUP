@@ -107,6 +107,14 @@ public class ControllerAdvisor {
                 messageError = "Message Error";
                 messageException = "The owner must only own a restaurant";
                 break;
+            case "class com.pragma.powerup.domain.exception.DishIsInactiveException":
+                messageError = "Message Error";
+                messageException = "The dish is inactive";
+                break;
+            case "class com.pragma.powerup.domain.exception.NoDataFoundException":
+                messageError = "Message Error";
+                messageException = "No data found for the requested petition";
+                break;
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(Collections.singletonMap(exception.getClass().toString(), exception.getMessage()));
@@ -121,5 +129,12 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
     }
-    
+
+/*    @ExceptionHandler(NoDataFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNoDataFoundExceptionDomain(
+            NoDataFoundException ignoredNoDataFoundException) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
+    }
+    */
 }

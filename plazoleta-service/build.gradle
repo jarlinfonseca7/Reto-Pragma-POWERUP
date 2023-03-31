@@ -45,6 +45,7 @@ dependencies {
 
 	implementation "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
 	implementation "org.springdoc:springdoc-openapi-webflux-ui:${openApiVersion}"
+	//implementation 'org.springdoc:springdoc-openapi-security:1.6.11'
 
 	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.1.4'
 

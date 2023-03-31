@@ -13,7 +13,7 @@ import com.pragma.powerup.domain.spi.persistence.IRestaurantPersistencePort;
 import com.pragma.powerup.domain.exception.OwnerAuthMustBeOwnerRestaurantException;
 
 
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -95,7 +95,14 @@ public class DishUseCase implements IDishServicePort {
 
     @Override
     public List<DishModel> findAllByRestauranteId(Long idRestaurante, Integer page, Integer size) {
-        return dishPersistencePort.findAllByRestauranteId(idRestaurante, page,size);
+        List<DishModel> dishModelList=dishPersistencePort.findAllByRestauranteId(idRestaurante, page,size);
+        List<DishModel> platosActivos=new ArrayList<>();
+        for (DishModel dishModel:dishModelList) {
+            if(dishModel.getActivo()){
+              platosActivos.add(dishModel);
+            }
+        }
+        return platosActivos;
     }
 
     @Override

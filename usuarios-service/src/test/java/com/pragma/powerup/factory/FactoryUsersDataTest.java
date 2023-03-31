@@ -15,7 +15,32 @@ public class FactoryUsersDataTest {
         usuario.setDocumentoDeIdentidad("1006287478");
         usuario.setCorreo("jarlin@gmail.com");
         usuario.setClave("password");
-        usuario.setRol(getRol());
+       // usuario.setRol(getRol());
+        return usuario;
+    }
+
+    public static Usuario getUsuarioEmployee(){
+        Usuario usuario= new Usuario();
+        usuario.setId(2L);
+        usuario.setNombre("Juan");
+        usuario.setApellido("Sanchez");
+        usuario.setCelular("+573251234565");
+        usuario.setDocumentoDeIdentidad("955455211");
+        usuario.setCorreo("juan@gmail.com");
+        usuario.setClave("password");
+        return usuario;
+    }
+
+    public static Usuario getUsuarioClient(){
+        Usuario usuario= new Usuario();
+        usuario.setId(3L);
+        usuario.setNombre("James");
+        usuario.setApellido("Rodriguez");
+        usuario.setCelular("+573120231412");
+        usuario.setDocumentoDeIdentidad("356554544");
+        usuario.setCorreo("james@gmail.com");
+        usuario.setClave("password");
+        usuario.setRol(new Rol());
         return usuario;
     }
 
